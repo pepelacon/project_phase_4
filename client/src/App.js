@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchPage from './components/SearchPage';
 import Settings from './components/Settings';
-import './App.css';
+import './index.css';
 
 function App() {
     const [allPosts, setAllPosts] = useState([{}])
