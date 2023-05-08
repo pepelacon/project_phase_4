@@ -51,10 +51,10 @@ code {
   }
 }
 
-.nav-bar {
-  height: 500px;
-  color: #3d503a;
-  margin-top: 30px;
+#nav-bar {
+  height: 75px;
+  background-color: #e0dfcb;
+  margin-top: 0;
 }
 
 .small-logo {
