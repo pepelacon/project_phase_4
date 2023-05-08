@@ -30,12 +30,12 @@ function App() {
             <HomePage />
             <SearchPage />
             <Settings />
-            <Footer />
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
                 </Routes>  
             </BrowserRouter>
+            <Footer />
         </div>
     );
 }

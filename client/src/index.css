@@ -54,4 +54,24 @@ code {
 .nav-bar {
   height: 500px;
   color: #3d503a;
+  margin-top: 30px;
+}
+
+.small-logo {
+  height: 60px;
+  width: 70px;
+}
+
+#footer-logo {
+  height: 100px;
+  width: 250px;
+  align-items: center;
+}
+
+#footer {
+  color: #3d503a;
+  margin-bottom: 0;
+  height: 20px;
+  margin-left: 0;
+  margin-right: 0;
 }
