@@ -5,9 +5,6 @@ import Button from '@mui/material/Button';
 import small from '../images/small.png';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
-
-import Link from '@mui/material/Link';
-
 import { useAuth0 } from '@auth0/auth0-react'
 import Login from './Login';
 import LogOut from './LogOut';

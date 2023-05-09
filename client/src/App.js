@@ -4,8 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
 import PostForm from './components/PostForm'
 import './App.css';
-import HomePage from './components/HomePage';
-import ProFile from './components/ProFile';
+import Profile from './components/Profile';
 import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -38,7 +37,7 @@ function App() {
                 <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
                 <Route path='/posts/new' element={<PostForm />}/>
                 <Route path="/following" element={<Following />} />
-                <Route path="/profile" element={<ProFile />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/settings" element={<Settings />} />
                   
