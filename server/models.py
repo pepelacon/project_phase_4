@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     username = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -47,6 +48,7 @@ class Post(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
 
+    title = db.Column(db.String)
     image = db.Column(db.String)
     description = db.Column(db.String)
     category = db.Column(db.String)
