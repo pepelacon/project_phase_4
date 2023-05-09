@@ -24,21 +24,23 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function Postcard() {
   return (
-    <Box sx={{overflowY: 'scroll' }}>
-      <ImageList variant="masonry" cols={3} gap={8}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <ImageListItemBar position="below" title={item.author} />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </Box>
+    <div id='all-posts'>
+        <Box sx={{overflowY: 'scroll' }}>
+        <ImageList variant="masonry" cols={3} gap={8}>
+            {itemData.map((item) => (
+            <ImageListItem key={item.img}>
+                <img
+                src={`${item.img}?w=248&fit=crop&auto=format`}
+                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                alt={item.title}
+                loading="lazy"
+                />
+                <ImageListItemBar position="below" id='photo-desc' title={item.author} />
+            </ImageListItem>
+            ))}
+        </ImageList>
+        </Box>
+    </div>
   );
 }
 

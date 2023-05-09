@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@300;400;500&family=Playfair+Display:ital@0;1&family=Thasadith:ital@0;1&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -57,6 +59,10 @@ code {
   margin-top: 0;
 }
 
+.nav-buttons {
+  font-family: 'Cormorant Garamond';
+}
+
 #small-logo {
   margin-top: 7px;
   height: 60px;
@@ -79,4 +85,13 @@ code {
   background-color: #3d503a;
   margin-bottom: 0;
   height: 100px;
+}
+
+#photo-desc {
+  font-family: 'Cormorant Garamond';
+}
+
+#all-posts {
+  margin-left: 10px;
+  margin-right: 10px;
 }

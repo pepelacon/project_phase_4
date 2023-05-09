@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import small from '../images/small.png';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
+import Link from '@mui/material/Link';
 
 const theme = createTheme({
     palette: {
@@ -21,13 +22,19 @@ const Navbar = () => {
         <div id='nav-bar'>
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
-                    <Button color="secondary" size='large'>Following</Button>
-                    <Button color="secondary" size='large'>Search</Button>
-                    <Button color="secondary" size='large'>New Post</Button>
+                    <Link
+                        component="button"
+                        
+                        to= "/following">
+                        Following
+                    </Link>
+                    <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
+                    <Button classname='nav-buttons' color="secondary" size='large'>Search</Button>
+                    <Button classname='nav-buttons' color="secondary" size='large'>New Post</Button>
                     <img id="small-logo" src={small}/>
-                    <Button color="secondary" size='large'>Settings</Button>
-                    <Button color="secondary" size='large'>Profile</Button>
-                    <Button color="secondary" size='large'>Logout</Button>
+                    <Button classname='nav-buttons' color="secondary" size='large'>Settings</Button>
+                    <Button classname='nav-buttons' color="secondary" size='large'>Profile</Button>
+                    <Button classname='nav-buttons' color="secondary" size='large'>Logout</Button>
                 </Stack>
             </ThemeProvider>
         </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
 import HomePage from './components/HomePage';
+import Profile from './components/Profile';
+import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchPage from './components/SearchPage';
@@ -25,18 +27,19 @@ function App() {
     console.log(allPosts);
 
     return (
-        <div>
+        <main classname= 'app'>
             <Navbar />
-            <HomePage />
-            <SearchPage />
-            <Settings />
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
-                </Routes>  
+                <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
+                <Route path="/following" element={<Following />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/settings" element={<Settings />} />
+                </Routes>
             </BrowserRouter>
             <Footer />
-        </div>
+        </main>
     );
 }
 
