@@ -1,37 +1,35 @@
-<<<<<<< HEAD
-import SearchBar from "./SearchBar";
-// import Basket from "./Basket"
-// import './NavBar.css'
-import {Link} from "react-router-dom"
-// import SignUp from './SignUp';
-// import SignOut from './SignOut';
-// import { CiShoppingCart } from "react-icons/ci"
-// import { useAuth0 } from "@auth0/auth0-react"
-// import logo from "./logo.png"
+// import SearchBar from "./SearchBar";
+// // import Basket from "./Basket"
+// // import './NavBar.css'
+// import {Link} from "react-router-dom"
+// // import SignUp from './SignUp';
+// // import SignOut from './SignOut';
+// // import { CiShoppingCart } from "react-icons/ci"
+// // import { useAuth0 } from "@auth0/auth0-react"
+// // import logo from "./logo.png"
 
 
-function NavBar({ setSearch, basketItem }) {
-// const {user, isAuthenticated} = useAuth0()
+// function NavBar({ setSearch, basketItem }) {
+// // const {user, isAuthenticated} = useAuth0()
 
-// const quantity = basketItem.reduce((acc, cur) => {return acc + cur.count}, 0)
+// // const quantity = basketItem.reduce((acc, cur) => {return acc + cur.count}, 0)
 
-    return(
-        <div className="nav-bar">
-            <div className="item logo">
-                <img className="logo" src="sdf" alt="Buy Sell"/>
-            </div>
-            <div className="item search">
-                <SearchBar setSearch={setSearch} />
-            </div>
-            <div className="item sign">
+//     return(
+//         <div className="nav-bar">
+//             <div className="item logo">
+//                 <img className="logo" src="sdf" alt="Buy Sell"/>
+//             </div>
+//             <div className="item search">
+//                 <SearchBar setSearch={setSearch} />
+//             </div>
+//             <div className="item sign">
                 
-                <Link to = {"/form"}> 
-                    <button>Add Product</button>
+//                 <Link to = {"/form"}> 
+//                     <button>Add Product</button>
                     
-                </Link>
+//                 </Link>
 
-            </div>
-=======
+//             </div>
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -50,7 +48,7 @@ const theme = createTheme({
     },
   });
 
-const Navbar = () => {
+const NavBar = () => {
     return (
         <div id='nav-bar'>
             <ThemeProvider theme={theme}>
@@ -64,7 +62,6 @@ const Navbar = () => {
                     <Button color="secondary" size='large'>Logout</Button>
                 </Stack>
             </ThemeProvider>
->>>>>>> 957a7a43e505e480d35e6b43f4d122e7970e5fdb
         </div>
     )
 
