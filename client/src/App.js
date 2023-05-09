@@ -3,11 +3,6 @@ import axios from "axios"
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
 import PostForm from './components/PostForm'
-// import HomePage from './components/HomePage';
-// import Navbar from './components/Navbar';
-// import Footer from './components/Footer';
-// import SearchPage from './components/SearchPage';
-// import Settings from './components/Settings';
 import './App.css';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
@@ -16,8 +11,6 @@ import SearchPage from './components/SearchPage';
 import Settings from './components/Settings';
 import './index.css';
 
-import LogOut from './components/LogOut';
-import LogIn from './components/Login';
 import Profile from './components/ProFile';
 
 
@@ -26,7 +19,7 @@ function App() {
    
     const fetchData = async () => {
         const data = await axios.get("http://127.0.0.1:5555/posts")
-        console.log("DATA: ", data);
+        // console.log("DATA: ", data);
         setAllPosts(data.data);
     };
 
@@ -38,9 +31,6 @@ function App() {
     return (
         <div>
             <main>
-                <h1>Auth0 Login</h1>
-                <LogIn />
-                <LogOut />
                 <Profile />
                 <Navbar />
                 <HomePage />

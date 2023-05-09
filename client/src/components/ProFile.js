@@ -23,11 +23,8 @@ const Profile = () => {
 
 
     return (
-        isAuthenticated && (
-            <article>
-                {JSON.stringify(user)}
-            </article>
-        )
+        <>
+        </>
     )
 
 }

@@ -86,8 +86,44 @@ class Users(Resource):
             return response
         else:
             return make_response(user.to_dict(), 200)
+        
+class FriendshipById(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        print(user.username)
+        all_friendships = [friend.to_dict() for friend in user.friends]
+        return make_response(all_friendships, 200)
+    
+class Friendships(Resource):
+    def post(self):
+        data = request.get_json()
+        try:
+            new_frienship = Friendship(
+                user_id = data['user_id'],
+                friend_id = data['friend_id']
+            )
+        except Exception as ex:
+            return make_response({"errors": [ex.__str__()]}, 422)
+        
+        db.session.add(new_frienship)
+        db.session.commit()
+
+        response_dict = new_frienship.to_dict()
+
+        response = make_response(
+            response_dict,
+            201,
+        )
+        return response
+
+# class Likes(Resource):
+#     def get(self):
+#         all_likes
 
 
+
+api.add_resource(Friendships, '/friendships')
+api.add_resource(FriendshipById, '/users/<int:id>/friends')
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/users/<int:id>')
 api.add_resource(Posts, '/posts')
