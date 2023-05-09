@@ -5,7 +5,7 @@ import PostContainer from './components/PostContainer'
 import PostForm from './components/PostForm'
 import './App.css';
 import HomePage from './components/HomePage';
-import Profile from './components/Profile';
+import ProFile from './components/ProFile';
 import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,7 +13,7 @@ import SearchPage from './components/SearchPage';
 import Settings from './components/Settings';
 import './index.css';
 
-import Profile from './components/ProFile';
+
 
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
                 <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
                 <Route path='/posts/new' element={<PostForm />}/>
                 <Route path="/following" element={<Following />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<ProFile />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/settings" element={<Settings />} />
                   
