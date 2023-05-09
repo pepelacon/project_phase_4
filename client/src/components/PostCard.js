@@ -1,6 +1,7 @@
 // function PostCard(post){
 //     const {image, description, category} = post;
    
+
 //     return (
 //     <div>
 //         <div>
