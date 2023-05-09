@@ -51,7 +51,32 @@ code {
   }
 }
 
-.nav-bar {
-  height: 500px;
-  color: #3d503a;
+#nav-bar {
+  height: 75px;
+  background-color: #e0dfcb;
+  margin-top: 0;
+}
+
+#small-logo {
+  margin-top: 7px;
+  height: 60px;
+  width: 70px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer-logo {
+  height: 100px;
+  width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+
+#footer {
+  background-color: #3d503a;
+  margin-bottom: 0;
+  height: 100px;
 }

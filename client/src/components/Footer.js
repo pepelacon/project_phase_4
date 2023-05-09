@@ -1,6 +1,11 @@
+import FullLogo from '../images/FullLogo.png'
+import React from 'react';
+
 const Footer = () => {
     return (
-        <div>This is the footer</div>
+        <div id='footer'>
+            <img id='footer-logo' src={FullLogo} alt="Full Logo" />
+        </div>
     )
 }
 
