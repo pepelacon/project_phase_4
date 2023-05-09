@@ -22,10 +22,10 @@ const Navbar = () => {
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
                     <Button color="secondary" size='large'>Following</Button>
-                    <Button color="secondary" size='large'>Settings</Button>
-                    <Button color="secondary" size='large'>New Post</Button>
-                    <img className="small-logo" src={small}/>
                     <Button color="secondary" size='large'>Search</Button>
+                    <Button color="secondary" size='large'>New Post</Button>
+                    <img id="small-logo" src={small}/>
+                    <Button color="secondary" size='large'>Settings</Button>
                     <Button color="secondary" size='large'>Profile</Button>
                     <Button color="secondary" size='large'>Logout</Button>
                 </Stack>
