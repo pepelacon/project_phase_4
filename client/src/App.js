@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
-import HomePage from './components/HomePage';
 import Profile from './components/Profile';
 import Following from './components/Following';
 import Navbar from './components/Navbar';
