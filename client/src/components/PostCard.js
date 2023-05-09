@@ -6,7 +6,6 @@ function PostCard(post){
         <div>
             <img className="card-img" src={image} alt={category}/>
             <h5 className="grid2">{description}</h5>
-            
             <h6 className="grid3">${category}</h6>       
         </div>  
      </div>
