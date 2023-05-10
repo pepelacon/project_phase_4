@@ -58,6 +58,13 @@ class UserById(Resource):
         if not user:
             return make_response({"message" : "User not found"})
         return make_response(user.to_dict(), 200)
+
+class PostById(Resource):
+    def get(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            return make_response({"message" : "Post not found"})
+        return make_response(post.to_dict(), 200)
     
 class Users(Resource):
     def post(self):
@@ -94,6 +101,13 @@ class FriendshipById(Resource):
         all_friendships = [friend.to_dict() for friend in user.friends]
         return make_response(all_friendships, 200)
     
+class YourPosts(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        print(user.username)
+        all_post = [post.to_dict() for post in user.posts]
+        return make_response(all_post, 200)
+    
 class Friendships(Resource):
     def post(self):
         data = request.get_json()
@@ -121,11 +135,14 @@ class Friendships(Resource):
 #         all_likes
 
 
+api.add_resource(YourPosts, '/users/<int:id>/posts')
 
 api.add_resource(Friendships, '/friendships')
 api.add_resource(FriendshipById, '/users/<int:id>/friends')
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/users/<int:id>')
+api.add_resource(PostById, '/posts/<int:id>')
+
 api.add_resource(Posts, '/posts')
 
 if __name__ == '__main__':

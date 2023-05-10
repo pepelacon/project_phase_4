@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -6,7 +6,8 @@ import small from '../images/small.png';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
 
-import Link from '@mui/material/Link';
+
+// import { Link } from '@mui/material/Link';
 
 import { useAuth0 } from '@auth0/auth0-react'
 import Login from './Login';
@@ -27,25 +28,40 @@ const theme = createTheme({
 const NavBar = () => {
 
     const { user, isAuthenticated, isLoading } = useAuth0();
+    // let {id} = useParams()
+   
+
+    // const navigate = useNavigate()
+    
+    // useEffect(() => {
+    //     console.log(id)
+    //     fetch(`http://localhost:3001/items/${id}`)
+    //     .then((resp) => resp.json())
+    //     .then((data) => setBigCard(data))
+    // }, [id])
+
     if (isAuthenticated) {
     return (
         <div id='nav-bar'>
 
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
-                    <Link
-                        component="button"
-           
-                        to= "/following">
-                        Following
+                    <Link to={"/users/<int:id>/friends"}>
+                        <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
-                    <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
                     <Button classname='nav-buttons' color="secondary" size='large'>Search</Button>
-                    <Button classname='nav-buttons' color="secondary" size='large'>New Post</Button>
+                    <Link to={"/"}>
+                        <Button classname='nav-buttons' color="secondary" size='large'>For you</Button>
+                    </Link>
+                    
                     <img id="small-logo" src={small}/>
-                    <Button classname='nav-buttons' color="secondary" size='large'>Settings</Button>
-                    <Button classname='nav-buttons' color="secondary" size='large'>Profile</Button>
-    
+                    <Link to={"/posts/new"}>
+                        <Button classname='nav-buttons' color="secondary" size='large'>New Post</Button>
+                    </Link>
+                    
+                    <Link to={"/profile"}>
+                        <Button classname='nav-buttons' color="secondary" size='large'>Profile</Button>
+                    </Link>
                     <LogOut />
 
                 </Stack>
@@ -61,7 +77,6 @@ const NavBar = () => {
                     <Button color="secondary" size='large'>Search</Button>
                     <img id="small-logo" src={small}/>
                     <Login />
-                    {/* <Button color="secondary" size='large'>Login</Button> */}
                 </Stack>
             </ThemeProvider>
         </div>
