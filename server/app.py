@@ -2,12 +2,15 @@ from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
+import os
 
 from models import db, User, Friendship, Post
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:9865458@localhost/DB' 
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
+# "postgresql://projectdb_la3v_user:jYGks0cLsUxfuZx0nhlTHB9ZOShNp9ug@dpg-chdr4le7avj0djk6c840-a.ohio-postgres.render.com/projectdb_la3v"
+# 'postgresql://user:9865458@localhost/DB'
 #  *  sqlite:///app.db
 # ! postgresql://postgres:password@localhost/project_db
 # postgresql://user:9865458@localhost/DB
