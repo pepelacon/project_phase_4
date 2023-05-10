@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
 import PostForm from './components/PostForm'
 import './App.css';
-import HomePage from './components/HomePage';
+// import HomePage from './components/HomePage';
 import PostCard from './components/PostCard';
-import ProFile from './components/ProFile';
+import Profile from './components/Profile';
 import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -40,7 +40,7 @@ function App() {
                     <Route path='/posts/:id' element={<PostCard />}/>
 
                     <Route path="/users/:id/friends" element={<Following />} />
-                    <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} />} />
+                    <Route path="/Profile" element={<Profile setUserId={setUserId} userId={userId} />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/settings" element={<Settings />} />
                 </Routes>
