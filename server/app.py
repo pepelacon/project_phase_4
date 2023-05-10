@@ -2,7 +2,8 @@ from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-
+from dotenv import load_dotenv
+load_dotenv()
 
 from models import db, User, Friendship, Post
 
