@@ -17,6 +17,8 @@ import './index.css';
 function App() {
     const [allPosts, setAllPosts] = useState([{}])
     const [userId, setUserId] = useState(null);
+    const [toggle, setToggle] = useState(false)
+
    
     const fetchData = async () => {
         const data = await axios.get("http://127.0.0.1:5555/posts")
@@ -26,7 +28,7 @@ function App() {
 
     useEffect(()=>{
         fetchData();
-    },[]);
+    },[toggle]);
             
     
     return (
@@ -34,7 +36,7 @@ function App() {
             <Navbar />
                 <Routes>
                     <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
-                    <Route path='/posts/new' element={<PostForm userId={userId} />}/>
+                    <Route path='/posts/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard />}/>
 
                     <Route path="/users/:id/friends" element={<Following />} />
