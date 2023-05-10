@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function PostForm() {
+function PostForm({userId}) {
   const navigate = useNavigate();
   const formSchema = yup.object().shape({
     title: yup.string().required("Must enter a title"),
@@ -17,7 +17,7 @@ function PostForm() {
       category:'',
       image:'',
       description:'',
-      user_id:'',
+      user_id: userId,
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -47,8 +47,8 @@ function PostForm() {
         <label>Image</label>
         <input type='text' name='image' value={formik.values.image} onChange={formik.handleChange} />
       
-        <label>user_id</label>
-        <input type='text' name='user_id' value={formik.values.user_id} onChange={formik.handleChange} />
+        {/* <label>user_id</label>
+        <input type='text' name='user_id' value={formik.values.user_id} onChange={formik.handleChange} /> */}
       
         <label>Description</label>
         <textarea type='text' rows='4' cols='50' name='description' value={formik.values.description} onChange={formik.handleChange} />

@@ -1,29 +1,10 @@
-// function PostCard(post){
-//     const {image, description, category} = post;
-   
-
-//     return (
-//     <div>
-//         <div>
-//             <img className="card-img" src={image} alt={category}/>
-//             <h5 className="grid2">{description}</h5>
-            
-//             <h6 className="grid3">${category}</h6>       
-//         </div>  
-//      </div>
-
-//     )
-// }
-
-// export default PostCard
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
-export default function Postcard() {
+function PostCard() {
   return (
     <div id='all-posts'>
         <Box sx={{overflowY: 'scroll' }}>
@@ -107,3 +88,5 @@ const itemData = [
     author: 'Hutomo Abrianto',
   },
 ];
+
+export default PostCard
