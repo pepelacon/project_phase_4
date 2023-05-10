@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import PostContainer from './components/PostContainer'
 import PostForm from './components/PostForm'
 import './App.css';
-import HomePage from './components/HomePage';
 import PostCard from './components/PostCard';
 import ProFile from './components/ProFile';
 import Following from './components/Following';
@@ -38,7 +37,6 @@ function App() {
                     <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
                     <Route path='/posts/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard />}/>
-
                     <Route path="/users/:id/friends" element={<Following />} />
                     <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} />} />
                     <Route path="/search" element={<SearchPage />} />
