@@ -95,3 +95,57 @@ code {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+#new-post {
+  text-align: center;
+  font-family: 'Cormorant Garamond';
+  font-size: 20px;
+  color: #3d503a;
+}
+
+#profile-page {
+  font-family: 'Cormorant Garamond';
+  text-align: center;
+  font-size: 36px;
+  margin-top: 0;
+  margin-bottom: 300px;
+}
+
+#toggler {
+  font-family: 'Thasadith';
+}
+
+#silly-forms {
+  font-family: 'Thasadith';
+}
+
+#following-photos {
+  font-family: 'Cormorant Garamond';
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#following-photos-desc {
+  font-family: 'Thasadith';
+  color: #44433b9d;
+}
+
+#following-photos-title {
+  font-family: 'Cormorant Garamond';
+  text-align: center;
+  font-size: 36px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #44433b;
+}
+
+#loading-screen {
+  font-family: 'Abril Fatface';
+  font-size: 50px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #56554ebf
+}
