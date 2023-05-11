@@ -105,7 +105,6 @@ class PostById(Resource):
 class Users(Resource):
     def post(self):
         data = request.get_json()
-        print(data['email'])
         user = User.query.filter_by(email=data['email']).first()
         if not user:
             
@@ -133,9 +132,13 @@ class Users(Resource):
 class Friendships(Resource):
     def post(self):
         data = request.get_json()
+        
         friend_id = data['friend_id']
         user_id = data['user_id']
-        print(friend_id, user_id)
+        # print(friend_id, user_id)
+
+        if user_id == friend_id:
+            return make_response({"errors": ["You cannot add yourself as a friend"]}, 422)
 
         existing_friendship = Friendship.query.filter_by(user_id=user_id, friend_id=friend_id).first()
 
@@ -164,7 +167,7 @@ class Friendships(Resource):
 class FriendshipById(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
-        print(user.username)
+        # print(user.username)
         all_friendships = [friend.to_dict() for friend in user.friends]
         return make_response(all_friendships, 200)
     
@@ -174,32 +177,8 @@ class YourPosts(Resource):
         print(user.username)
         all_post = [post.to_dict() for post in user.posts]
         return make_response(all_post, 200)
-    
-class Friendships(Resource):
-    def post(self):
-        data = request.get_json()
-        try:
-            new_frienship = Friendship(
-                user_id = data['user_id'],
-                friend_id = data['friend_id']
-            )
-        except Exception as ex:
-            return make_response({"errors": [ex.__str__()]}, 422)
-        
-        db.session.add(new_frienship)
-        db.session.commit()
 
-        response_dict = new_frienship.to_dict()
 
-        response = make_response(
-            response_dict,
-            201,
-        )
-        return response
-
-# class Likes(Resource):
-#     def get(self):
-#         all_likes
 class Author(Resource):
     def get(self, id):
         post = Post.query.filter_by(id=id).first()

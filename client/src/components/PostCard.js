@@ -8,54 +8,74 @@ import * as yup from "yup"
 function PostCard({userId}) {
     const [bigCard, setBigCard] = useState({})
     const [user, setUser] = useState({})
+    const [friends, setFriends] = useState([])
+    const [toggle, setToggle] = useState(false)
 
-    console.log(bigCard);
     let {id} = useParams()
     const {title, image, category, description} = bigCard
     const {username} = user
-
-    console.log(user.id);
     const navigate = useNavigate()
     
-    console.log(userId);
+// get info abt CARD
     useEffect(() => {
-        console.log(id)
+        console.log(id);
         fetch(`/posts/${id}`)
         .then((resp) => resp.json())
         .then((data) => setBigCard(data))
     }, [id])
 
+
+// get info abt AUTHOR of post
     useEffect(() => {
-        console.log(id)
         fetch(`/posts/${id}/user`)
         .then((resp) => resp.json())
         .then((data) => setUser(data))
     }, [id])
 
+    useEffect(() => {
+        console.log(userId)
+        fetch(`/users/${userId}/friends`)
+          .then((resp) => resp.json())
+          .then((data) => setFriends(data))
+      }, [toggle])
     
+      console.log(friends, `Post ID:  ${id}`, `Account logged IN: ${userId}`, `Author of post ID: ${user.id}`);
+      const isAlreadyFriend = !!friends.find((friend) => friend.friend_id === userId);
+        console.log(isAlreadyFriend); 
     
-      
-    const addFriend = (friendId) => {
+      const handleAddFriend = () => {
         console.log("addFriend called")
         fetch("/friendships", {
-            method: "POST",
-            headers: {
+          method: "POST",
+          headers: {
             "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                friend_id: friendId,
-                user_id: userId
-            }),
+          },
+          body: JSON.stringify({
+            friend_id: user.id,
+            user_id: userId
+          }),
         }).then((res) => {
-            if(res.ok) {
+          if(res.ok) {
             res.json().then(post => {
-                console.log(post);
-                navigate(`/`)
+              console.log(post);
+            //   setFriends([...friends, user]);
+              setToggle(!toggle);
             })
-            }
+          }
         })
-        
-    }  
+      }
+    
+      const handleRemoveFriend = () => {
+        console.log("removeFriend called")
+        fetch(`/friendships`, {
+          method: "DELETE"
+        }).then((res) => {
+          if(res.ok) {
+            setFriends(friends.filter((friend) => friend.id !== user.id));
+            setToggle(!toggle);
+          }
+        })
+      }
         
     return(
         <div className="single-card" >
@@ -72,7 +92,9 @@ function PostCard({userId}) {
                 <div className='ingle-text-body'>
                     <p>Author: {username}</p>
                 </div>
-                <button onClick={()=> addFriend(user.id)} >Add to friends</button>
+                
+                    <button onClick={handleAddFriend}>Add friend</button>
+                
             </div>
             <div className="single-card-footer">
                 <span className="single-text-price">Price: </span>
