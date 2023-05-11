@@ -98,7 +98,7 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
                         aria-label="Large sizes"
                     >
                     <ToggleButton id='toggler' value="your posts" color='third'>your posts</ToggleButton>
-                    <ToggleButton id='toggler' value="favorite" color='third'>favorite</ToggleButton>
+                    <ToggleButton id='toggler' value="favorite" color='third'>likes</ToggleButton>
                     <Link to={"/profile/new"}>
                         <ToggleButton id='toggler' value="new post" color='third'>new post</ToggleButton>
                     </Link>

@@ -115,4 +115,3 @@ function PostForm({userId, setToggle, toggle}) {
   
 export default PostForm
 
-  
