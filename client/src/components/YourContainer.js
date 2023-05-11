@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
+import { Link, useParams, useNavigate } from "react-router-dom"
+
 
 export default function YourContainer({ postsToShow, state, deleteYourPost }) {
 
@@ -44,8 +46,10 @@ export default function YourContainer({ postsToShow, state, deleteYourPost }) {
             </CardContent>
             <CardActions>
                 {state ?
-                    <>
-                        <Button size="small">Edit</Button>
+                    <>  
+                        <Link to={`/posts/${item.id}/edit`}>
+                            <Button size="small">Edit</Button>
+                        </Link>
                         <Button size="small" onClick={() => handleDelete(item)}>Delete</Button>
                     </>
                     : 

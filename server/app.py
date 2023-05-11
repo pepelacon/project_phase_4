@@ -84,6 +84,24 @@ class PostById(Resource):
         db.session.commit()
         return make_response({"mesage" : "POst was deleted"})
     
+    def patch(self, id):
+        upd_pt = Post.query.filter_by(id=id).first()
+        if not upd_pt:
+            return make_response({
+                "error": "Post not found"
+            }, 404)
+        data = request.get_json()
+        try:
+            for attr in data:
+                setattr(upd_pt, attr, data[attr])
+            db.session.add(upd_pt)
+            db.session.commit()
+        except Exception as e:
+            return make_response({"errors" : [e.__str__()]}, 422)
+        return make_response(upd_pt.to_dict(), 200)
+
+
+    
 class Users(Resource):
     def post(self):
         data = request.get_json()
