@@ -4,25 +4,29 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import IconButton from '@mui/material/IconButton';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-
+import StarIcon from '@mui/icons-material/Star';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { Link, useNavigate } from "react-router-dom"
 
 
-function PostContainer({allPosts}){
-    
-console.log(allPosts);
-// let postList = allPosts.map(item => (<PostCard key={item.id} {...item} />))
-let postList = allPosts.map((item) => (console.log(item),
+
+function PostContainer({ allPosts, addToFavorite, favorite }){
+  
+    console.log(favorite);
+    const navigate = useNavigate()
+    const redirect = (id) => {
+        navigate(`/posts/${id}`)
+    }
+
+let postList = allPosts.map((item) => (
                 <ImageListItem key={item.id}>
-                    <img
-                    src={`${item.image}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt={item.title}
-                    loading="lazy"
-                    />
-                    {/* <ImageListItemBar position="below" id='photo-desc' title={item.title} /> */}
-                    {/* <ImageListItemBar  actionPosition="right" id='photo-desc' subtitle={item.title} />
-                     */}
+                        <img
+                            src={`${item.image}?w=248&fit=crop&auto=format`}
+                            srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            alt={item.title}
+                            loading="lazy"
+                            onClick={ () => {redirect(item.id) }} 
+                        />
                      <ImageListItemBar
                             sx={{
                                 background:
@@ -33,14 +37,16 @@ let postList = allPosts.map((item) => (console.log(item),
                             position="top"
                             actionIcon={
                                 <IconButton
-                                sx={{ color: 'white' }}
-                                aria-label={`star ${item.title}`}
-                                >
-                  <StarBorderIcon />
-                </IconButton>
-              }
-              actionPosition="left"
-            />
+                                    sx={{ color: 'white' }}
+                                    aria-label={`star ${item.title}`}
+                                    onClick={() => addToFavorite(item)}>
+                                    
+                                    {favorite.includes(item) ? <StarIcon /> : <StarBorderIcon />}
+                                </IconButton>
+                                
+                            }
+                            actionPosition="left"
+                        />
                    
                 </ImageListItem>
                 ))
@@ -49,7 +55,7 @@ return (
    
          <div id='all-posts'>
                 <Box sx={{overflowY: 'scroll' }}>
-                <ImageList variant="masonry" cols={4} gap={8}>
+                <ImageList variant="masonry" cols={5} gap={8}>
                     {postList}
                 </ImageList>
                 </Box>

@@ -46,7 +46,7 @@ const NavBar = () => {
 
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
-                    <Link to={"/users/<int:id>/friends"}>
+                    <Link to={"/user/friends"}>
                         <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
                     <Button classname='nav-buttons' color="secondary" size='large'>Search</Button>

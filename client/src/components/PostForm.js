@@ -41,15 +41,28 @@ function PostForm({userId, setToggle, toggle}) {
       <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
         <label>Title </label>
         <input type='text' name='title' value={formik.values.title} onChange={formik.handleChange} />
-        
         <label> Category</label>
-        <input type='text' name='category' value={formik.values.category} onChange={formik.handleChange} />
+        <select
+          className="form-input"
+          name="category"
+          id="category"
+          onChange={formik.handleChange}
+          value={formik.values.category}
+        >
+          <option value="">Pick a Category</option>
+          <option value="Home Goods">Home Goods</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Sports">Sports</option>
+          <option value="Books">Books</option>
+          <option value="Outdoors">Outdoors</option>
+
+        </select>
+        {/* <label> Category</label>
+        <input type='text' name='category' value={formik.values.category} onChange={formik.handleChange} /> */}
       
         <label>Image</label>
         <input type='text' name='image' value={formik.values.image} onChange={formik.handleChange} />
-      
-        {/* <label>user_id</label>
-        <input type='text' name='user_id' value={formik.values.user_id} onChange={formik.handleChange} /> */}
       
         <label>Description</label>
         <textarea type='text' rows='4' cols='50' name='description' value={formik.values.description} onChange={formik.handleChange} />
@@ -61,3 +74,6 @@ function PostForm({userId, setToggle, toggle}) {
   }
   
   export default PostForm
+
+
+  
