@@ -4,7 +4,7 @@ import YourContainer from './YourContainer';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts}) => {
+const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
 
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [yourPosts, setYourPosts] = useState([{}])
@@ -83,7 +83,7 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts}) => {
                     <ToggleButton value="favorite">favorite</ToggleButton>
                     
                 </ToggleButtonGroup>                
-                <YourContainer postsToShow={postsToShow} state={state} deleteYourPost={deleteYourPost}/>
+                <YourContainer postsToShow={postsToShow} state={state} deleteYourPost={deleteYourPost} addToFavorite={addToFavorite}/>
             </div>
         </>
     )

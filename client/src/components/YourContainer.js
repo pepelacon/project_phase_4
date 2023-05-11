@@ -10,7 +10,7 @@ import ImageList from '@mui/material/ImageList';
 import { Link, useParams, useNavigate } from "react-router-dom"
 
 
-export default function YourContainer({ postsToShow, state, deleteYourPost }) {
+export default function YourContainer({ postsToShow, state, deleteYourPost, addToFavorite }) {
 
     const handleDelete = (post) => {
         fetch(`/posts/${post.id}`, {
@@ -26,7 +26,12 @@ export default function YourContainer({ postsToShow, state, deleteYourPost }) {
         .catch(error => console.error(error))
       }
 
-    console.log(state);
+    const delteFromFavorite = (i) => {
+        console.log("check");
+        addToFavorite(i)
+    }
+
+   
         let postList = postsToShow.map((item) => (
             <Card sx={{ maxWidth: 300 }}>
             <CardMedia
@@ -53,14 +58,13 @@ export default function YourContainer({ postsToShow, state, deleteYourPost }) {
                         <Button size="small" onClick={() => handleDelete(item)}>Delete</Button>
                     </>
                     : 
-                        <Button size="small">Delete</Button>
+                        <Button size="small" onClick={() => delteFromFavorite(item)}>Delete</Button>
                 }
             </CardActions>
             </Card>
         ))
 
     return (
-
         <div id='all-posts'>
             <Box sx={{overflowY: 'scroll' }}>
             <ImageList variant="masonry" cols={5} gap={8}>

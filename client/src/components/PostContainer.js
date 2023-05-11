@@ -6,23 +6,27 @@ import IconButton from '@mui/material/IconButton';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom"
+
 
 
 function PostContainer({ allPosts, addToFavorite, favorite }){
   
     console.log(favorite);
+    const navigate = useNavigate()
+    const redirect = (id) => {
+        navigate(`/posts/${id}`)
+    }
 
-// let postList = allPosts.map(item => (<PostCard key={item.id} {...item} />))
 let postList = allPosts.map((item) => (
                 <ImageListItem key={item.id}>
-                    <img
-                        src={`${item.image}?w=248&fit=crop&auto=format`}
-                        srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt={item.title}
-                        loading="lazy"
-                    />
-                    
+                        <img
+                            src={`${item.image}?w=248&fit=crop&auto=format`}
+                            srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            alt={item.title}
+                            loading="lazy"
+                            onClick={ () => {redirect(item.id) }} 
+                        />
                      <ImageListItemBar
                             sx={{
                                 background:
@@ -39,6 +43,7 @@ let postList = allPosts.map((item) => (
                                     
                                     {favorite.includes(item) ? <StarIcon /> : <StarBorderIcon />}
                                 </IconButton>
+                                
                             }
                             actionPosition="left"
                         />

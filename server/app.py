@@ -130,6 +130,37 @@ class Users(Resource):
         else:
             return make_response(user.to_dict(), 200)
         
+class Friendships(Resource):
+    def post(self):
+        data = request.get_json()
+        friend_id = data['friend_id']
+        user_id = data['user_id']
+        print(friend_id, user_id)
+
+        existing_friendship = Friendship.query.filter_by(user_id=user_id, friend_id=friend_id).first()
+
+        if existing_friendship:
+            return make_response({"errors": ["Users are already friends"]}, 422)
+
+        try:
+            new_frienship = Friendship(
+                user_id=user_id,
+                friend_id=friend_id
+            )
+        except Exception as ex:
+            return make_response({"errors": [ex.__str__()]}, 422)
+
+        db.session.add(new_frienship)
+        db.session.commit()
+
+        response_dict = new_frienship.to_dict()
+
+        response = make_response(
+            response_dict,
+            201,
+        )
+        return response
+        
 class FriendshipById(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
@@ -169,7 +200,14 @@ class Friendships(Resource):
 # class Likes(Resource):
 #     def get(self):
 #         all_likes
-
+class Author(Resource):
+    def get(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            return make_response({"message" : "Post not found"})
+        author = post.user
+        
+        return make_response(author.to_dict(), 200)
 
 
 # @app.route('/')
@@ -178,6 +216,7 @@ class Friendships(Resource):
 #     return render_template("index.html")
 
 api.add_resource(YourPosts, '/users/<int:id>/posts')
+api.add_resource(Author, '/posts/<int:id>/user')
 
 api.add_resource(Friendships, '/friendships')
 api.add_resource(FriendshipById, '/users/<int:id>/friends')
