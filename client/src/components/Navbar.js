@@ -50,7 +50,7 @@ const NavBar = () => {
                         <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
                     <Link to={"/"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>For you</Button>
+                        <Button classname='nav-buttons' color="secondary" size='large'>Explore</Button>
                     </Link>
                     
                     <img id="small-logo" src={small}/>

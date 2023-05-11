@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios"
 import { Route, Routes } from 'react-router-dom'
-import PostContainer from './components/PostContainer'
+import Explore from './components/Explore'
 import PostForm from './components/PostForm'
 import './App.css';
 import PostCard from './components/PostCard';
@@ -44,7 +44,7 @@ function App() {
         <main className= 'app'>
             <Navbar />
                 <Routes>
-                    <Route path='/' element={<PostContainer allPosts={allPosts} addToFavorite={addToFavorite} favorite={favorite}/>}/>
+                    <Route path='/' element={<Explore allPosts={allPosts} addToFavorite={addToFavorite} favorite={favorite}/>}/>
                     <Route path='/profile/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard userId={userId}/>}/>
                     <Route path='/posts/:id/edit' element={<EditPost setToggle={setToggle} toggle={toggle}/>}/>
