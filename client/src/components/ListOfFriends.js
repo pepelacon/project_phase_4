@@ -7,7 +7,7 @@ let postList = allPosts.map(item => (<FriendCard key={item.id} {...item} />))
 
 return (
     <div>
-        <h1></h1>
+        <h1>hello????</h1>
         <div className="container">
             {postList}
         </div>

@@ -49,15 +49,11 @@ const NavBar = () => {
                     <Link to={"/user/friends"}>
                         <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
-                    <Button classname='nav-buttons' color="secondary" size='large'>Search</Button>
                     <Link to={"/"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>For you</Button>
+                        <Button classname='nav-buttons' color="secondary" size='large'>Explore</Button>
                     </Link>
                     
                     <img id="small-logo" src={small}/>
-                    <Link to={"/posts/new"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>New Post</Button>
-                    </Link>
                     
                     <Link to={"/profile"}>
                         <Button classname='nav-buttons' color="secondary" size='large'>Profile</Button>
