@@ -1,8 +1,25 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import YourContainer from './YourContainer';
+import { Link } from "react-router-dom"
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { amber } from '@mui/material/colors';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: amber[50],
+      },
+      secondary: {
+        main: '#5c6f59',
+      },
+      third: {
+        main: '#3d503a',
+      },
+    },
+  });
 
 const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
 
@@ -61,31 +78,36 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
       }, [user, userId]);
    
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div id='loading-screen'>Loading...</div>;
       }
     
    
     const postsToShow = state ? yourPosts : favorite
     
     return (
-        <>
-            <div>       
+            <div id='profile-page'>  
+            <ThemeProvider theme={theme}>
                 <p>Welcome, {user.name}</p>
-                <p>Your user_id is: {userId}</p>
+                {/* <p>Your user_id is: {userId}</p> */}
                 <ToggleButtonGroup
-                        color="primary"
+                        color='secondary'
                         value={alignment}
                         exclusive
                         onChange={handleList}
-                        aria-label="Platform"
+                        // aria-label="Platform"
+                        aria-label="Large sizes"
                     >
-                    <ToggleButton value="your posts">your posts</ToggleButton>
-                    <ToggleButton value="favorite">favorite</ToggleButton>
-                    
+                    <ToggleButton id='toggler' value="your posts" color='third'>your posts</ToggleButton>
+                    <ToggleButton id='toggler' value="favorite" color='third'>favorite</ToggleButton>
+                    <Link to={"/profile/new"}>
+                        <ToggleButton id='toggler' value="new post" color='third'>new post</ToggleButton>
+                    </Link>
+                    <ToggleButton id='toggler' value="friends" color='third'>friends</ToggleButton>
+                    <ToggleButton id='toggler' value="settings" color='third'>settings</ToggleButton>
                 </ToggleButtonGroup>                
                 <YourContainer postsToShow={postsToShow} state={state} deleteYourPost={deleteYourPost} addToFavorite={addToFavorite}/>
+            </ThemeProvider>     
             </div>
-        </>
     )
 
 }
