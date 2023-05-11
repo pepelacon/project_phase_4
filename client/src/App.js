@@ -17,10 +17,11 @@ function App() {
     const [allPosts, setAllPosts] = useState([{}])
     const [userId, setUserId] = useState(null);
     const [toggle, setToggle] = useState(false)
+    const [favorite, setFavorite] = useState([])
 
    
     const fetchData = async () => {
-        const data = await axios.get("http://127.0.0.1:5555/posts")
+        const data = await axios.get("/posts")
         // console.log("DATA: ", data);
         setAllPosts(data.data);
     };
@@ -29,12 +30,22 @@ function App() {
         fetchData();
     },[toggle]);
             
-    
+    const addToFavorite= (item) => {
+        const selected = favorite.find((el) => el.id === item.id)
+        if (selected) { 
+            const updatedFavorites = favorite.filter((favItem) => favItem.id !== item.id);
+            setFavorite(updatedFavorites);
+        } else {
+          const add = [...favorite, item]
+          setFavorite(add);
+        }
+      }
+      console.log(favorite);
     return (
         <main className= 'app'>
             <Navbar />
                 <Routes>
-                    <Route path='/' element={<PostContainer allPosts={allPosts}/>}/>
+                    <Route path='/' element={<PostContainer allPosts={allPosts} addToFavorite={addToFavorite} favorite={favorite}/>}/>
                     <Route path='/posts/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard />}/>
                     <Route path="/users/:id/friends" element={<Following />} />

@@ -14,7 +14,8 @@ app = Flask(
     static_folder='../client/build',
     template_folder='../client/build'
     )
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:9865458@localhost/DB'
+# "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
 # "postgresql://projectdb_la3v_user:jYGks0cLsUxfuZx0nhlTHB9ZOShNp9ug@dpg-chdr4le7avj0djk6c840-a.ohio-postgres.render.com/projectdb_la3v"
 # 'postgresql://user:9865458@localhost/DB'
 #  *  sqlite:///app.db
@@ -145,10 +146,10 @@ class Friendships(Resource):
 
 
 
-@app.route('/')
-@app.route('/<int:id>')
-def index(id=0):
-    return render_template("index.html")
+# @app.route('/')
+# @app.route('/<int:id>')
+# def index(id=0):
+#     return render_template("index.html")
 
 api.add_resource(YourPosts, '/users/<int:id>/posts')
 
