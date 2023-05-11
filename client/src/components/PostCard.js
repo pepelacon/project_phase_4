@@ -1,114 +1,107 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useFormik } from "formik"
+import * as yup from "yup"
 
-function PostCard() {
-    return (
-        <>
-        </>
-            // <div id='all-posts'>
-            //     <Box sx={{overflowY: 'scroll' }}>
-            //     <ImageList variant="masonry" cols={3} gap={8}>
-            //         {itemData.map((item) => (
-            //         <ImageListItem key={item.img}>
-            //             <img
-            //             src={`${item.img}?w=248&fit=crop&auto=format`}
-            //             srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            //             alt={item.title}
-            //             loading="lazy"
-            //             />
-            //             <ImageListItemBar position="below" id='photo-desc' title={item.author} />
-            //         </ImageListItem>
-            //         ))}
-            //     </ImageList>
-            //     </Box>
-            // </div>
-          );
-        }
-//   return (
-//     <div id='all-posts'>
-//         <Box sx={{overflowY: 'scroll' }}>
-//         <ImageList variant="masonry" cols={3} gap={8}>
-//             {itemData.map((item) => (
-//             <ImageListItem key={item.img}>
-//                 <img
-//                 src={`${item.img}?w=248&fit=crop&auto=format`}
-//                 srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-//                 alt={item.title}
-//                 loading="lazy"
-//                 />
-//                 <ImageListItemBar position="below" id='photo-desc' title={item.author} />
-//             </ImageListItem>
-//             ))}
-//         </ImageList>
-//         </Box>
-//     </div>
-//   );
-// }
 
-// const itemData = [
-//   {
-//     img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
-//     title: 'Bed',
-//     author: 'swabdesign',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1525097487452-6278ff080c31',
-//     title: 'Books',
-//     author: 'Pavel Nekoranec',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6',
-//     title: 'Sink',
-//     author: 'Charles Deluvio',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-//     title: 'Kitchen',
-//     author: 'Christian Mackie',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1588436706487-9d55d73a39e3',
-//     title: 'Blinds',
-//     author: 'Darren Richardson',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1574180045827-681f8a1a9622',
-//     title: 'Chairs',
-//     author: 'Taylor Simpson',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1530731141654-5993c3016c77',
-//     title: 'Laptop',
-//     author: 'Ben Kolde',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1481277542470-605612bd2d61',
-//     title: 'Doors',
-//     author: 'Philipp Berndt',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7',
-//     title: 'Coffee',
-//     author: 'Jen P.',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee',
-//     title: 'Storage',
-//     author: 'Douglas Sheppard',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62',
-//     title: 'Candle',
-//     author: 'Fi Bell',
-//   },
-//   {
-//     img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4',
-//     title: 'Coffee table',
-//     author: 'Hutomo Abrianto',
-//   },
-// ];
 
-export default PostCard
+function PostCard({userId}) {
+    const [bigCard, setBigCard] = useState({})
+    const [user, setUser] = useState({})
+    const [friends, setFriends] = useState([])
+    const [toggle, setToggle] = useState(false)
+
+    let {id} = useParams()
+    const {title, image, category, description} = bigCard
+    const {username} = user
+    const navigate = useNavigate()
+    
+// get info abt CARD
+    useEffect(() => {
+        console.log(id);
+        fetch(`/posts/${id}`)
+        .then((resp) => resp.json())
+        .then((data) => setBigCard(data))
+    }, [id])
+
+
+// get info abt AUTHOR of post
+    useEffect(() => {
+        fetch(`/posts/${id}/user`)
+        .then((resp) => resp.json())
+        .then((data) => setUser(data))
+    }, [id])
+
+    useEffect(() => {
+        console.log(userId)
+        fetch(`/users/${userId}/friends`)
+          .then((resp) => resp.json())
+          .then((data) => setFriends(data))
+      }, [toggle])
+    
+      console.log(friends, `Post ID:  ${id}`, `Account logged IN: ${userId}`, `Author of post ID: ${user.id}`);
+      const isAlreadyFriend = !!friends.find((friend) => friend.friend_id === userId);
+        console.log(isAlreadyFriend); 
+    
+      const handleAddFriend = () => {
+        console.log("addFriend called")
+        fetch("/friendships", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            friend_id: user.id,
+            user_id: userId
+          }),
+        }).then((res) => {
+          if(res.ok) {
+            res.json().then(post => {
+              console.log(post);
+            //   setFriends([...friends, user]);
+              setToggle(!toggle);
+            })
+          }
+        })
+      }
+    
+      const handleRemoveFriend = () => {
+        console.log("removeFriend called")
+        fetch(`/friendships`, {
+          method: "DELETE"
+        }).then((res) => {
+          if(res.ok) {
+            setFriends(friends.filter((friend) => friend.id !== user.id));
+            setToggle(!toggle);
+          }
+        })
+      }
+        
+    return(
+        <div className="single-card" >
+            <div >
+                <img className="single-card-img" src={image} alt={title} onClick={() => navigate('/')}/>
+            </div>
+            <div className="single-card-info">
+                <div className='single-title'>
+                    <h3 className="single-text-title">{title} </h3>
+                </div>
+                <div className='ingle-text-body'>
+                    <p>{description}</p>
+                </div>
+                <div className='ingle-text-body'>
+                    <p>Author: {username}</p>
+                </div>
+                
+                    <button onClick={handleAddFriend}>Add friend</button>
+                
+            </div>
+            <div className="single-card-footer">
+                <span className="single-text-price">Price: </span>
+                <span>Category: {category}</span>
+            </div>
+        </div>  
+    )
+}
+
+export default PostCard;
