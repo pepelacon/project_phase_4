@@ -22,7 +22,6 @@ function App() {
    
     const fetchData = async () => {
         const data = await axios.get("/posts")
-        // console.log("DATA: ", data);
         setAllPosts(data.data);
     };
 
@@ -49,7 +48,7 @@ function App() {
                     <Route path='/posts/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard />}/>
                     <Route path="/users/:id/friends" element={<Following />} />
-                    <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} />} />
+                    <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} favorite={favorite} setAllPosts={setAllPosts} allPosts={allPosts}/>} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/settings" element={<Settings />} />
                 </Routes>

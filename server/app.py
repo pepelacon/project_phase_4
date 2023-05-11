@@ -76,6 +76,14 @@ class PostById(Resource):
             return make_response({"message" : "Post not found"})
         return make_response(post.to_dict(), 200)
     
+    def delete(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            return make_response({"message" : "Post not found"})
+        db.session.delete(post)
+        db.session.commit()
+        return make_response({"mesage" : "POst was deleted"})
+    
 class Users(Resource):
     def post(self):
         data = request.get_json()
