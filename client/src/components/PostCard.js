@@ -32,20 +32,31 @@ function PostCard({userId}) {
         .then((data) => setUser(data))
     }, [id])
 
-    useEffect(() => {
-        console.log(userId)
-        fetch(`/users/${userId}/friends`)
-          .then((resp) => resp.json())
-          .then((data) => setFriends(data))
-      }, [toggle])
-    
+
+
+//set friends list
+useEffect(() => {
+    console.log(userId);
+    fetch(`/users/${userId}/friends`)
+      .then((resp) => resp.json())
+      .then((data) => handleFriendsData(data))
+  }, [toggle]);
+
+  function handleFriendsData(data) {
+    setFriends(data);
+    const existingFriend = data.some((friend) => parseInt(userId) === friend.friend_id);
+    console.log(existingFriend);
+}
+      
+      
+      
       console.log(friends, `Post ID:  ${id}`, `Account logged IN: ${userId}`, `Author of post ID: ${user.id}`);
-      const isAlreadyFriend = !!friends.find((friend) => friend.friend_id === userId);
-        console.log(isAlreadyFriend); 
     
+
+
       const handleAddFriend = () => {
         console.log("addFriend called")
-        fetch("/friendships", {
+        fetch(`/friendships/${userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +82,8 @@ function PostCard({userId}) {
           method: "DELETE"
         }).then((res) => {
           if(res.ok) {
-            setFriends(friends.filter((friend) => friend.id !== user.id));
+            setFriends(friends.filter((friend) => friend.fiend_id !== parseInt(userId)));
+            console.log(typeof userId)
             setToggle(!toggle);
           }
         })

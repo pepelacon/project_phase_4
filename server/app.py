@@ -15,6 +15,7 @@ app = Flask(
     template_folder='../client/build'
     )
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:9865458@localhost/DB'
+# 'postgresql://user:9865458@localhost/DB'
 # "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
 # "postgresql://projectdb_la3v_user:jYGks0cLsUxfuZx0nhlTHB9ZOShNp9ug@dpg-chdr4le7avj0djk6c840-a.ohio-postgres.render.com/projectdb_la3v"
 # 'postgresql://user:9865458@localhost/DB'
@@ -130,7 +131,7 @@ class Users(Resource):
             return make_response(user.to_dict(), 200)
         
 class Friendships(Resource):
-    def post(self):
+    def post(self, id):
         data = request.get_json()
         
         friend_id = data['friend_id']
@@ -163,6 +164,15 @@ class Friendships(Resource):
             201,
         )
         return response
+    
+    # def delete(self, id):
+    #     friendship = Friendship.query.filter_by(id=id).first()
+    #     if not friendship:
+    #         return make_response({"message" : "Post not found"})
+    #     db.session.delete(friendship)
+    #     db.session.commit()
+    #     return make_response({"mesage" : "POst was deleted"})
+        
         
 class FriendshipById(Resource):
     def get(self, id):
@@ -197,7 +207,7 @@ class Author(Resource):
 api.add_resource(YourPosts, '/users/<int:id>/posts')
 api.add_resource(Author, '/posts/<int:id>/user')
 
-api.add_resource(Friendships, '/friendships')
+api.add_resource(Friendships, '/friendships/<int:id>')
 api.add_resource(FriendshipById, '/users/<int:id>/friends')
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/users/<int:id>')
