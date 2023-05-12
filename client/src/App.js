@@ -30,7 +30,7 @@ function App() {
     useEffect(()=>{
         fetchData();
     },[toggle]);
-            
+       
     const addToFavorite= (item) => {
         const selected = favorite.find((el) => el.id === item.id)
         if (selected) { 

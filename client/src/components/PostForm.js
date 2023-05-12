@@ -142,7 +142,7 @@ function PostForm({userId, setToggle, toggle}) {
             </Typography>
             <textarea type='text' rows='4' cols='50' name='description' value={formik.values.description} onChange={formik.handleChange} />
             <CardActions>
-                <Button type='input' size="large" color='secondary' align='center'>Submit</Button>
+                <Button id='submit-button' type='input' size="large" color='secondary'>Submit</Button>
             </CardActions>
             </form> 
         </CardContent>
