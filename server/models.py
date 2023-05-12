@@ -12,8 +12,9 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
 
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, nullable=False)
+    profile_pic = db.Column(db.String)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -23,7 +24,20 @@ class User(db.Model, SerializerMixin):
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
     likes = db.relationship('Like', back_populates='user', cascade='all, delete-orphan')
 
-
+    @validates('username')
+    def validates_username(self, key, username):
+        if not username:
+            raise ValueError('Username must be provided.')
+        return username
+    
+    validates('email')
+    def validates_email(self, key, email):
+        if not email:
+            raise ValueError('Email must be provided.')
+        return email
+    
+    def __repr__(self):
+        return f'Username: {self.username}, Email: {self.email}'
 
 class Friendship(db.Model, SerializerMixin):
     __tablename__ = 'friendships'
@@ -61,6 +75,16 @@ class Post(db.Model, SerializerMixin):
     likes = db.relationship('Like', back_populates='post', cascade='all, delete-orphan')
     user = db.relationship('User', back_populates='posts')
 
+@validates('title')
+def validates_title(self, key, title):
+    if not title:
+        raise ValueError('Title must be provided.')
+    return title
+
+@validates('category')
+def validates_category(self, key, category):
+    if not category:
+        raise ValueError('Category must be provided.')
 
 class Comment(db.Model, SerializerMixin):
 
@@ -80,7 +104,13 @@ class Comment(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='comments')
     post = db.relationship('Post', back_populates='comments')
 
-    
+    @validates('content')
+    def validates_content(self, key, content):
+        if not content:
+            raise ValueError('Comment cannot be empty.')
+        elif len(content) <= 1 and len(content) >= 120:
+            raise ValueError('Comment must be between 1 and 120 characters.')
+        return content
 class Like(db.Model, SerializerMixin):
 
     __tablename__ = 'likes'

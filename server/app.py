@@ -84,7 +84,7 @@ class PostById(Resource):
             return make_response({"message" : "Post not found"})
         db.session.delete(post)
         db.session.commit()
-        return make_response({"mesage" : "POst was deleted"})
+        return make_response({"mesage" : "Post was deleted"})
     
     def patch(self, id):
         upd_pt = Post.query.filter_by(id=id).first()
