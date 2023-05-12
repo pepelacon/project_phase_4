@@ -166,7 +166,7 @@ class Friendships(Resource):
         )
         return response
     
-   def delete(self, id):
+    def delete(self, id):
         friendship = Friendship.query.filter_by(id=id).first()
         if not friendship:
             return make_response({"message" : "Post not found"})
