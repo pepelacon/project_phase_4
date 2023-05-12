@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
+
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -28,6 +29,7 @@ const theme = createTheme({
       },
     },
   });
+
 
 function PostCard({userId}) {
     const [bigCard, setBigCard] = useState({})
@@ -115,7 +117,9 @@ useEffect(() => {
         
     let singleCard = (
       <div id='single-card-screen'>
+
       <ThemeProvider theme={theme}>
+
       <Card id='single-card' sx={{ maxWidth: 500 }}>
       <CardMedia
         id="single-card-img"
@@ -141,6 +145,7 @@ useEffect(() => {
           </Typography>
           
             <Button id='single-card-button' size="medium" onClick={handleAddFriend}>Add friend</Button>
+
             <Button id='single-card-heart' size="medium" color='third'>
                 <FavoriteBorderIcon />
             </Button>
@@ -150,6 +155,11 @@ useEffect(() => {
         </CardContent>
       </Card>
       </ThemeProvider>
+
+          
+        </CardContent>
+      </Card>
+
       </div>
     )
     return (
