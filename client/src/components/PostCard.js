@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
-
-
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
 
 function PostCard({userId}) {
     const [bigCard, setBigCard] = useState({})
@@ -89,31 +95,47 @@ useEffect(() => {
         })
       }
         
-    return(
-        <div className="single-card" >
-            <div >
-                <img className="single-card-img" src={image} alt={title} onClick={() => navigate('/')}/>
-            </div>
-            <div className="single-card-info">
-                <div className='single-title'>
-                    <h3 className="single-text-title">{title} </h3>
-                </div>
-                <div className='ingle-text-body'>
-                    <p>{description}</p>
-                </div>
-                <div className='ingle-text-body'>
-                    <p>Author: {username}</p>
-                </div>
-                
-                    <button onClick={handleAddFriend}>Add friend</button>
-                
-            </div>
-            <div className="single-card-footer">
-                <span className="single-text-price">Price: </span>
-                <span>Category: {category}</span>
-            </div>
-        </div>  
+    let singleCard = (
+      <div id='single-card-screen'>
+      <Card id='single-card' sx={{ maxWidth: 500 }}>
+      <CardMedia
+        id="single-card-img"
+        component="img"
+        height='auto'
+        image={image}
+        alt={title}
+        onClick={() => navigate('/')}
+        />
+        <CardContent>
+          <Typography id="single-text-title" gutterBottom variant="h5" component="div">
+            {title}
+          </Typography>
+          <Typography id="single-text-body" gutterBottom variant="h5" component="div">
+            "{description}"
+          </Typography>
+          <Divider />
+          <Typography id="single-text-extras" gutterBottom variant="h5" component="div">
+            Posted By: {username}
+          </Typography>
+          <Typography id="single-text-extras" gutterBottom variant="h5" component="div">
+            Category: {category}
+          </Typography>
+          
+            <Button id='single-card-button' size="medium" onClick={handleAddFriend}>Add friend</Button>
+          
+        </CardContent>
+      </Card>
+      </div>
     )
+    return (
+      <div id='single-card-screen' >
+      <div id='single-card-box'>
+          <Box >
+              {singleCard}
+          </Box>
+      </div>
+      </div>
+  )
 }
 
 export default PostCard;

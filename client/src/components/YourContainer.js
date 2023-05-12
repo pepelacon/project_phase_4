@@ -68,9 +68,9 @@ export default function YourContainer({ postsToShow, state, deleteYourPost, addT
                 {state ?
                     <>  
                         <Link to={`/posts/${item.id}/edit`}>
-                            <Button id='card-buttons' color='third' size="small">Edit</Button>
+                            <Button id='card-button-edit' color='third' size="small">Edit</Button>
                         </Link>
-                        <Button id='card-buttons' color='third' size="small" onClick={() => handleDelete(item)}>Delete</Button>
+                        <Button id='card-button-delete' color='third' size="small" onClick={() => handleDelete(item)}>Delete</Button>
                     </>
                     : 
                         <Button color='third' size="small" onClick={() => delteFromFavorite(item)}>Delete</Button>
