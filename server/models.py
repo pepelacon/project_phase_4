@@ -35,6 +35,9 @@ class User(db.Model, SerializerMixin):
         if not email:
             raise ValueError('Email must be provided.')
         return email
+    
+    def __repr__(self):
+        return f'Username: {self.username}, Email: {self.email}'
 
 class Friendship(db.Model, SerializerMixin):
     __tablename__ = 'friendships'
