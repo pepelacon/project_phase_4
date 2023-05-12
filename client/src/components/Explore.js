@@ -36,7 +36,7 @@ const Explore = ({allPosts}) => {
                 <Divider />
                 </p>
             <Box sx={{ overflowY: 'scroll' }}>
-            <ImageList variant="masonry" cols={3} gap={8}>
+            <ImageList variant="masonry" cols={6} gap={8}>
                 {allPosts.map((post) => (
                 <ImageListItem key={post.image}>
                     <img
