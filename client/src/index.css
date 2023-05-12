@@ -93,8 +93,31 @@ code {
 }
 
 #all-posts {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 30px;
+}
+
+#individual-card {
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: #e5e3de;
+}
+
+#card-details {
+  font-family: 'Cormorant Garamond Bold';
+  color: #464542;
+}
+
+#card-details-little {
+  font-family: 'Cormorant Garamond';
+  color: #454440;
+}
+
+#card-buttons {
+  font-family: 'Thasadith';
+  margin-bottom: 10px;
+
 }
 
 #new-post {
@@ -114,6 +137,8 @@ code {
 
 #toggler {
   font-family: 'Thasadith';
+  width: 100px;
+  height: 60px;
 }
 
 #silly-forms {
