@@ -74,7 +74,7 @@ function PostForm({userId, setToggle, toggle}) {
     },
   });
 
-  const card = (
+  return (
     <div id='profile-page'>       
     <p>Welcome, {user.name}</p>
     <ThemeProvider theme={theme}>
@@ -101,8 +101,9 @@ function PostForm({userId, setToggle, toggle}) {
                     <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
                 </Link>
             </ToggleButtonGroup>                
-    <React.Fragment>         
-        <h1 id='new-post'>Create a new post!</h1>
+    <React.Fragment> 
+    <Card id='new-form-card' variant="outlined" sx={{ maxWidth: 500 }}>       
+        <p id='new-post'>Create a new post!</p>
         <CardContent>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
             <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary" >
@@ -113,9 +114,8 @@ function PostForm({userId, setToggle, toggle}) {
                 Category
             </Typography>
             <select
-            className="form-input"
+            id="silly-forms"
             name="category"
-            id="category"
             onChange={formik.handleChange}
             value={formik.values.category}
             >
@@ -142,19 +142,15 @@ function PostForm({userId, setToggle, toggle}) {
             </Typography>
             <textarea type='text' rows='4' cols='50' name='description' value={formik.values.description} onChange={formik.handleChange} />
             <CardActions>
-                <Button id='submit-button' type='input' size="large" color='secondary'>Submit</Button>
+                <Button id='submit-button' type='input' size="large" color='secondary' center>Submit</Button>
             </CardActions>
             </form> 
         </CardContent>
+      </Card>
     </React.Fragment>
     </ThemeProvider>
     </div>
-)
-    return (
-        <Box sx={{ minWidth: 275 }}>
-            <Card variant="outlined">{card}</Card>
-        </Box>
-    )
+  )
 }
   
 export default PostForm
