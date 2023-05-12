@@ -10,6 +10,8 @@ import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Settings from './components/Settings';
+import ListOfFriends from './components/ListOfFriends';
+import Likes from './components/Likes';
 import EditPost from './components/EditPost';
 import './index.css';
 
@@ -48,12 +50,12 @@ function App() {
                     <Route path='/profile/new' element={<PostForm userId={userId} setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path='/posts/:id' element={<PostCard userId={userId}/>}/>
                     <Route path='/posts/:id/edit' element={<EditPost setToggle={setToggle} toggle={toggle}/>}/>
-
-                    <Route path="/user/friends" element={<Following />} />
+                    <Route path="/profile/following" element={<Following userId={userId}/>}/>
+                    <Route path="/profile/friends" element={<ListOfFriends />} />
                     <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} favorite={favorite} setAllPosts={setAllPosts} allPosts={allPosts} addToFavorite={addToFavorite}/>} />
                     <Route path="/profile/settings" element={<Settings />} />
+                    <Route path="/profile/likes" element={<Likes />} />
                 </Routes>
-           
             <Footer />
         </main>
     );
