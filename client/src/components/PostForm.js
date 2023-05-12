@@ -120,14 +120,17 @@ function PostForm({userId, setToggle, toggle}) {
             value={formik.values.category}
             >
             <option value="">Pick a Category</option>
-            <option value="Home Goods">Home Goods</option>
-            <option value="Electronics">Food</option>
-            <option value="Fashion">Fashion</option>
-            <option value="Sports">Sports</option>
+            <option value="Books">Animals</option>
+            <option value="Books">Art</option>
+            <option value="Books">Beauty</option>
             <option value="Books">Books</option>
-            <option value="Outdoors">Outdoors</option>
-            <option value="Travel">Travel</option>
             <option value="DIY">DIY</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Food</option>
+            <option value="Home Goods">Home Goods</option>
+            <option value="Outdoors">Outdoors</option>
+            <option value="Sports">Sports</option>
+            <option value="Travel">Travel</option>
 
             </select>
             <Typography id='silly-forms' sx={{ fontSize: 20 }} color="text.secondary">
@@ -138,11 +141,11 @@ function PostForm({userId, setToggle, toggle}) {
                 Description
             </Typography>
             <textarea type='text' rows='4' cols='50' name='description' value={formik.values.description} onChange={formik.handleChange} />
+            <CardActions>
+                <Button type='input' size="large" color='secondary' align='center'>Submit</Button>
+            </CardActions>
             </form> 
         </CardContent>
-    <CardActions>
-        <Button size="large" color='secondary' align='center'>Submit</Button>
-    </CardActions>
     </React.Fragment>
     </ThemeProvider>
     </div>

@@ -59,7 +59,8 @@ code {
   margin-top: 0;
 }
 
-.nav-buttons {
+#nav-buttons {
+  margin: 20px;
   font-family: 'Cormorant Garamond';
 }
 

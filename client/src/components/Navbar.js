@@ -47,18 +47,20 @@ const NavBar = () => {
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
                     <Link to={"/user/friends"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>Following</Button>
+                        <Button id='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
                     <Link to={"/"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>Explore</Button>
+                        <Button id='nav-buttons' color="secondary" size='large'>Explore</Button>
                     </Link>
                     
                     <img id="small-logo" src={small}/>
                     
                     <Link to={"/profile"}>
-                        <Button classname='nav-buttons' color="secondary" size='large'>Profile</Button>
+                        <Button id='nav-buttons' color="secondary" size='large'>Profile</Button>
                     </Link>
+                    <p id='nav-buttons'>
                     <LogOut />
+                    </p>
 
                 </Stack>
             </ThemeProvider>
