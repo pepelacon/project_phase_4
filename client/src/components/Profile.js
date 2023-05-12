@@ -54,6 +54,7 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
     useEffect(() => {
         async function createUser() {
           try {
+            console.log(user)
             const response = await fetch('/users', {
               method: 'POST',
               headers: {
