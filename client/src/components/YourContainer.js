@@ -8,7 +8,22 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import { Link, useParams, useNavigate } from "react-router-dom"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { amber } from '@mui/material/colors';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+        main: amber[50],
+    },
+    secondary: {
+        main: '#5c6f59',
+    },
+    third: {
+        main: '#32312c',
+    },
+  },
+});
 
 export default function YourContainer({ postsToShow, state, deleteYourPost, addToFavorite }) {
 
@@ -33,41 +48,42 @@ export default function YourContainer({ postsToShow, state, deleteYourPost, addT
 
    
         let postList = postsToShow.map((item) => (
-            <Card sx={{ maxWidth: 300 }}>
+            <ThemeProvider theme={theme}>
+            <Card id='individual-card' sx={{ maxWidth: 300 }}>
             <CardMedia
                 component="img"
-                alt="green iguana"
-                height="140"
+                alt="<3"
+                height="250"
                 image={item.image}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography id='card-details' gutterBottom variant="h5" component="div">
                 {item.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography id='card-details-little' variant="body2">
                 {item.description}
-                </Typography>
-                
+                </Typography>  
             </CardContent>
             <CardActions>
                 {state ?
                     <>  
                         <Link to={`/posts/${item.id}/edit`}>
-                            <Button size="small">Edit</Button>
+                            <Button id='card-buttons' color='third' size="small">Edit</Button>
                         </Link>
-                        <Button size="small" onClick={() => handleDelete(item)}>Delete</Button>
+                        <Button id='card-buttons' color='third' size="small" onClick={() => handleDelete(item)}>Delete</Button>
                     </>
                     : 
-                        <Button size="small" onClick={() => delteFromFavorite(item)}>Delete</Button>
+                        <Button color='third' size="small" onClick={() => delteFromFavorite(item)}>Delete</Button>
                 }
             </CardActions>
             </Card>
+            </ThemeProvider>
         ))
 
     return (
         <div id='all-posts'>
             <Box sx={{overflowY: 'scroll' }}>
-            <ImageList variant="masonry" cols={5} gap={8}>
+            <ImageList variant="masonry" cols={5} gap={12}>
                 {postList}
             </ImageList>
             </Box>
