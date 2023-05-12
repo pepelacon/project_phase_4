@@ -11,6 +11,26 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { amber } from '@mui/material/colors';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: amber[50],
+      },
+      secondary: {
+        main: '#5c6f59',
+      },
+      third: {
+        main: '#757269',
+      },
+    },
+  });
+
+
 function PostCard({userId}) {
     const [bigCard, setBigCard] = useState({})
     const [user, setUser] = useState({})
@@ -97,6 +117,9 @@ useEffect(() => {
         
     let singleCard = (
       <div id='single-card-screen'>
+
+      <ThemeProvider theme={theme}>
+
       <Card id='single-card' sx={{ maxWidth: 500 }}>
       <CardMedia
         id="single-card-img"
@@ -122,9 +145,21 @@ useEffect(() => {
           </Typography>
           
             <Button id='single-card-button' size="medium" onClick={handleAddFriend}>Add friend</Button>
+
+            <Button id='single-card-heart' size="medium" color='third'>
+                <FavoriteBorderIcon />
+            </Button>
+            <Button id='single-card-heart' size="medium" color='third'>
+                <FavoriteIcon />
+            </Button>
+        </CardContent>
+      </Card>
+      </ThemeProvider>
+
           
         </CardContent>
       </Card>
+
       </div>
     )
     return (
@@ -139,3 +174,127 @@ useEffect(() => {
 }
 
 export default PostCard;
+
+// import { useEffect, useState } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+
+
+
+
+// function PostCard({ userId, num }) {
+//     const [bigCard, setBigCard] = useState({});
+//     const [user, setUser] = useState({});
+//     const [isFriend, setIsFriend] = useState(false);
+//     const [toggle, setToggle] = useState(false);
+//     const [friendship, setFriendship] = useState(null);
+//     const navigate = useNavigate();
+
+//     const { id: postId } = useParams();
+//     const { title, image, category, description } = bigCard;
+//     const { username, id } = user;
+//     console.log(username, id);
+//     // get info about CARD and FRIENDS
+//     useEffect(() => {
+//         const fetchData = async () => {
+//           try {
+//             const postResponse = await fetch(`/posts/${postId}`);
+//             const postData = await postResponse.json();
+//             setBigCard(postData);
+      
+//             const userResponse = await fetch(`/posts/${postId}/user`);
+//             const userData = await userResponse.json();
+//             setUser(userData);
+           
+//             const friendshipResponse = await fetch(`/users/${userId}/${userData.id}`);
+//             const friendshipData = await friendshipResponse.json();
+      
+//             if (friendshipData.friendshipExists) {
+//               setFriendship(friendshipData.friendship);
+//               setIsFriend(true);
+//             } else {
+//               setFriendship(null);
+//               setIsFriend(false);
+//             }
+//           } catch (error) {
+//             console.error(error);
+//           }
+//         };
+      
+//         fetchData();
+//       }, [postId, toggle]);
+
+      
+
+//     console.log(
+//       friendship,
+//       `Post ID:  ${postId}`,
+//       `Account logged IN: ${userId}`,
+//       `Author of post ID: ${id}`
+//     );
+
+//     const handleAddFriend = () => {
+//       if ( friendship === null ) {
+//         fetch(`/friendships/${userId}`, {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             friend_id: id,
+//             user_id: userId,
+//           }),
+//         })
+//           .then((res) => res.json())
+//           .then((newFriendship) => {
+//             setFriendship(newFriendship);
+//             setIsFriend(true);
+//           });
+//       } else {
+//         fetch(`/friendships/${friendship.id}`, {
+//           method: "DELETE",
+//         }).then((res) => {
+//           if (res.ok) {
+//             setFriendship(null);
+//             setIsFriend(false);
+//           }
+//         });
+//       }
+//     };
+     
+      
+        
+//     return(
+//         <div className="single-card" >
+//             <div >
+//                 <img className="single-card-img" src={image} alt={title} onClick={() => navigate('/')}/>
+//             </div>
+//             <div className="single-card-info">
+//                 <div className='single-title'>
+//                     <h3 className="single-text-title">{title} </h3>
+//                 </div>
+//                 <div className='ingle-text-body'>
+//                     <p>{description}</p>
+//                 </div>
+//                 <div className='ingle-text-body'>
+//                     <p>Author Name: {username}</p>
+//                     <p>Author ID: {id}</p>
+
+//                 </div>
+
+                
+//                 {userId !== id && (
+//                   <button onClick={handleAddFriend}>
+//                     {isFriend ? "Remove friend" : "Add friend"}
+//                   </button>
+//                 )}
+                
+//             </div>
+//             <div className="single-card-footer">
+//                 <span className="single-text-price">Price: </span>
+//                 <span>Category: {category}</span>
+//             </div>
+//         </div>  
+//     )
+// }
+
+// export default PostCard;
