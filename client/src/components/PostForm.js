@@ -23,7 +23,6 @@ function PostForm({userId, setToggle, toggle}) {
     title: yup.string().required("Must enter a title"),
     budget: yup.number().positive()
   })
-  console.log(userId);
   const formik = useFormik({
     initialValues: {
       title:'',
@@ -52,10 +51,10 @@ function PostForm({userId, setToggle, toggle}) {
   })
 
   const [state, setState] = useState(true)
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user } = useAuth0();
   const [alignment, setAlignment] = useState('your posts');
 
-  const handleList = (event, newAlignment) => {
+  const handleList = (newAlignment) => {
       setAlignment(newAlignment);
       setState(!state)
   };

@@ -166,22 +166,62 @@ class Friendships(Resource):
         )
         return response
     
-    # def delete(self, id):
-    #     friendship = Friendship.query.filter_by(id=id).first()
-    #     if not friendship:
-    #         return make_response({"message" : "Post not found"})
-    #     db.session.delete(friendship)
-    #     db.session.commit()
-    #     return make_response({"mesage" : "POst was deleted"})
-        
+   def delete(self, id):
+        friendship = Friendship.query.filter_by(id=id).first()
+        if not friendship:
+            return make_response({"message" : "Post not found"})
+        db.session.delete(friendship)
+        db.session.commit()
+        return make_response({"mesage" : "POst was deleted"})
+
+class GetFriendships(Resource):
+    def get(self, user_id, friend_id):
+        friendship = Friendship.query.filter_by(friend_id=friend_id, user_id=user_id).first()
+
+        if not friendship:
+            response = make_response({"friendshipExists": False}, 404)
+            return response
+
+        response = make_response({"friendshipExists": True, "friendship": friendship.to_dict()}, 200)
+        return response
         
 class FriendshipById(Resource):
+    def get(self, user_id, friend_id):
+        user = User.query.filter_by(id=user_id).first()
+        # print(user.username)
+        fr = [friend.to_dict() for friend in user.friends if friend.friend_id == friend_id]
+        if not fr:
+            make_response("", 404)
+        print(fr)
+        return make_response(fr, 200)
+    
+class AllFriendships(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
         # print(user.username)
-        all_friendships = [friend.to_dict() for friend in user.friends]
-        return make_response(all_friendships, 200)
-    
+        all_friends = [friend.friend_id for friend in user.friends]
+        all = [User.query.filter_by(id =num).first().to_dict() for num in all_friends]
+        if not user:
+            make_response("", 404)
+        print( all)
+        return make_response(all, 200)
+
+class AllFriendshipsPost(Resource):
+    def get(self, id):
+        posts_list = []
+        user = User.query.filter_by(id=id).first()
+        
+        f_id = [f.id for f in user.friends]
+        for friendship_id in f_id:
+            friend = Friendship.query.filter_by(id=friendship_id).first()
+            user = User.query.filter_by(id=friend.friend_id).first()
+            print(user.posts)
+            for post in user.posts:
+                print(post)
+                posts_list.append(post)
+        posts_dict = [pos.to_dict() for pos in posts_list]
+        return make_response(posts_dict, 200)
+
 class YourPosts(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
@@ -194,22 +234,30 @@ class Author(Resource):
     def get(self, id):
         post = Post.query.filter_by(id=id).first()
         if not post:
-            return make_response({"message" : "Post not found"})
+            return make_response({"message" : "Post not found"}, 404)
         author = post.user
         
         return make_response(author.to_dict(), 200)
+    
+class FriendsPosts(Resource):
+    def get(self, id):
+        friend = User.query.filter_by(id=id).first()
+        all_posts = [post.to_dict() for post in friend.posts]
+        return make_response(all_posts, 200)
+    
 
 
-# @app.route('/')
-# @app.route('/<int:id>')
-# def index(id=0):
-#     return render_template("index.html")
+#  *   all friends posts
+api.add_resource(FriendsPosts, '/friend/<int:id>/posts')
 
+
+api.add_resource(AllFriendships, '/users/<int:id>/friends')
+api.add_resource(GetFriendships, '/users/<int:user_id>/<int:friend_id>')
 api.add_resource(YourPosts, '/users/<int:id>/posts')
 api.add_resource(Author, '/posts/<int:id>/user')
-
+api.add_resource(AllFriendshipsPost, '/user/<int:id>/friends/posts')
 api.add_resource(Friendships, '/friendships/<int:id>')
-api.add_resource(FriendshipById, '/users/<int:id>/friends')
+api.add_resource(FriendshipById, '/users/<int:user_id>/friends/<int:friend_id>')
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/users/<int:id>')
 api.add_resource(PostById, '/posts/<int:id>')
