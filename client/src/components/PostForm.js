@@ -1,6 +1,7 @@
 import React from 'react'
 // import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useFormik } from "formik"
 import * as yup from "yup"
 import Box from '@mui/material/Box';
@@ -11,6 +12,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Link } from "react-router-dom"
+import { useAuth0 } from '@auth0/auth0-react'
 
 function PostForm({userId, setToggle, toggle}) {
   const navigate = useNavigate();
@@ -46,6 +51,15 @@ function PostForm({userId, setToggle, toggle}) {
     },
   })
 
+  const [state, setState] = useState(true)
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const [alignment, setAlignment] = useState('your posts');
+
+  const handleList = (event, newAlignment) => {
+      setAlignment(newAlignment);
+      setState(!state)
+  };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -54,14 +68,41 @@ function PostForm({userId, setToggle, toggle}) {
       secondary: {
         main: '#5c6f59',
       },
+      third: {
+        main: '#757269',
+      },
     },
   });
 
   const card = (
-    <div id='new-post'>
+    <div id='profile-page'>       
+    <p>Welcome, {user.name}</p>
     <ThemeProvider theme={theme}>
-    <React.Fragment>
-        <h1>Create a new post!</h1>
+            <ToggleButtonGroup
+                color="primary"
+                exclusive
+                value={alignment}
+                onChange={handleList}
+                aria-label="Large"
+            >
+                <Link to="/profile">
+                    <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
+                </Link>
+                <Link to="/profile/new">
+                    <ToggleButton id='toggler' value="favorite" color='third' >New Post</ToggleButton>
+                </Link>
+                <Link to="/profile/likes">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Likes</ToggleButton>
+                </Link>
+                <Link to="/profile/friends">
+                    <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
+                </Link>
+                <Link to="/profile/settings">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
+                </Link>
+            </ToggleButtonGroup>                
+    <React.Fragment>         
+        <h1 id='new-post'>Create a new post!</h1>
         <CardContent>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
             <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary" >
