@@ -1,25 +1,25 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import YourContainer from './YourContainer';
-import { Link } from "react-router-dom"
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Link } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
 
 const theme = createTheme({
-    palette: {
-      primary: {
+  palette: {
+    primary: {
         main: amber[50],
-      },
-      secondary: {
-        main: '#5c6f59',
-      },
-      third: {
-        main: '#3d503a',
-      },
     },
-  });
+    secondary: {
+        main: '#5c6f59',
+    },
+    third: {
+        main: '#757269',
+    },
+  },
+});
 
 const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
 
@@ -27,18 +27,18 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
     const [yourPosts, setYourPosts] = useState([{}])
     const [state, setState] = useState(true)
 
-
     const [alignment, setAlignment] = useState('your posts');
+
+    const handleList = (event, newAlignment) => {
+        setAlignment(newAlignment);
+        setState(!state)
+    };
 
     const deleteYourPost = (post) => {
         setYourPosts(yourPosts.filter(p => p.id !== post.id))
         setAllPosts(allPosts.filter(p => p.id !== post.id))
     }
 
-    const handleList = (event, newAlignment) => {
-        setAlignment(newAlignment);
-        setState(!state)
-    };
     
     useEffect(() => {
         if (userId) {
@@ -54,6 +54,7 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
     useEffect(() => {
         async function createUser() {
           try {
+            console.log(user)
             const response = await fetch('/users', {
               method: 'POST',
               headers: {
@@ -85,29 +86,34 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
     const postsToShow = state ? yourPosts : favorite
     
     return (
-            <div id='profile-page'>  
+        <div id='profile-page'>       
+            <p>Welcome, {user.name}</p>
+            {/* <p>Your user_id is: {userId}</p> */}
             <ThemeProvider theme={theme}>
-                <p>Welcome, {user.name}</p>
-                {/* <p>Your user_id is: {userId}</p> */}
-                <ToggleButtonGroup
-                        color='secondary'
-                        value={alignment}
-                        exclusive
-                        onChange={handleList}
-                        // aria-label="Platform"
-                        aria-label="Large sizes"
-                    >
-                    <ToggleButton id='toggler' value="your posts" color='third'>your posts</ToggleButton>
-                    <ToggleButton id='toggler' value="favorite" color='third'>favorite</ToggleButton>
-                    <Link to={"/profile/new"}>
-                        <ToggleButton id='toggler' value="new post" color='third'>new post</ToggleButton>
-                    </Link>
-                    <ToggleButton id='toggler' value="friends" color='third'>friends</ToggleButton>
-                    <ToggleButton id='toggler' value="settings" color='third'>settings</ToggleButton>
-                </ToggleButtonGroup>                
-                <YourContainer postsToShow={postsToShow} state={state} deleteYourPost={deleteYourPost} addToFavorite={addToFavorite}/>
-            </ThemeProvider>     
-            </div>
+            <ToggleButtonGroup
+                color="primary"
+                value={alignment}
+                exclusive
+                onChange={handleList}
+                aria-label="Large"
+            >
+                <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
+                <Link to="/profile/new">
+                    <ToggleButton id='toggler' value="favorite" color='third' >New Post</ToggleButton>
+                </Link>
+                <Link to="/profile/likes">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Likes</ToggleButton>
+                </Link>
+                <Link to="/profile/friends">
+                    <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
+                </Link>
+                <Link to="/profile/settings">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
+                </Link>
+            </ToggleButtonGroup>                
+            <YourContainer postsToShow={postsToShow} state={state} deleteYourPost={deleteYourPost} addToFavorite={addToFavorite}/>
+            </ThemeProvider>
+        </div>
     )
 
 }

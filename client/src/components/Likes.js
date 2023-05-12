@@ -1,4 +1,3 @@
-import FriendCard from "./FriendCard"
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import ToggleButton from '@mui/material/ToggleButton';
@@ -7,10 +6,8 @@ import { Link } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
 
-function ListOfFriends(){
-    
+const Likes = () => {
 
-// let postList = allPosts.map(item => (<FriendCard key={item.id} {...item} />)
     const [state, setState] = useState(true)
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [alignment, setAlignment] = useState('your posts');
@@ -62,9 +59,9 @@ function ListOfFriends(){
                 </Link>
             </ToggleButtonGroup>                
             </ThemeProvider>
-        <h1 >This is friends list</h1>
+            <h3>This will be posts the user has liked</h3>
         </div>
-     )   
+    )
 }
 
-export default ListOfFriends;
+export default Likes

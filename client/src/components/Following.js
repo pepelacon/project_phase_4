@@ -11,7 +11,7 @@ const Following = () => {
         <div id='following-photos'>
             <p id='following-photos-title'>
                 <Divider />
-                E X P L O R E
+                F O L L O W I N G
                 <Divider />
                 </p>
             <Box sx={{ overflowY: 'scroll' }}>
