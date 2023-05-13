@@ -58,10 +58,9 @@ const NavBar = () => {
                     <Link to={"/profile"}>
                         <Button id='nav-buttons' color="secondary" size='large'>Profile</Button>
                     </Link>
-                    <div id='nav-buttons'>
-                    <LogOut />
-                    </div>
-
+                    <Button id='nav-buttons' color="secondary" size='large'>
+                        <LogOut />
+                    </Button>
                 </Stack>
             </ThemeProvider>
         </div>

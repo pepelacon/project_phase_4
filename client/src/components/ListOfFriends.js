@@ -6,6 +6,13 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
 import { Link, useNavigate } from "react-router-dom"
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function ListOfFriends({userId}){
     
@@ -113,16 +120,26 @@ function ListOfFriends({userId}){
                     <ToggleButton id='toggler' value="settings" color='third' >Edit Profile</ToggleButton>
                 </Link>
             </ToggleButtonGroup>                
-            </ThemeProvider>
-        <div>
+        <div id='friend-card'>
             {allFriends.map((friend) => (
                 <div key={friend.id}>
-                    <p>Name: {friend.username}</p>
-                    <p>email: {friend.email}</p>
-                    <button onClick={() => unFollow(friend.id)}>Unfollow</button>
+                <Card id='legit-friend-card' sx={{ maxWidth: 275 }}>
+                <CardContent>
+                    <Typography id="friend-name" gutterBottom>
+                    {friend.username}
+                    </Typography>
+                    <Typography id="friend-email" variant="h5" component="div">
+                    {friend.email}
+                    </Typography>
+                    <CardActions>
+                        <Button id='unfollow-button' size="small" onClick={() => unFollow(friend.id)}>Unfollow</Button>
+                    </CardActions>  
+                </CardContent>
+                </Card>
                 </div>
             ))}
         </div>
+        </ThemeProvider>
         </div>
      )   
 }
