@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
+const UserProfile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
 
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [yourPosts, setYourPosts] = useState([{}])
@@ -118,4 +118,4 @@ const ProFile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavor
 
 }
 
-export default ProFile
+export default UserProfile
