@@ -155,11 +155,6 @@ useEffect(() => {
         </CardContent>
       </Card>
       </ThemeProvider>
-
-          
-        </CardContent>
-      </Card>
-
       </div>
     )
     return (
@@ -175,8 +170,6 @@ useEffect(() => {
 
 export default PostCard;
 
-// import { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
 
 
 

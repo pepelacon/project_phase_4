@@ -202,10 +202,6 @@ code {
   color: #56554ebf
 }
 
-/* #single-card-screen {
-  background-color: #e5e3de;
-} */
-
 #single-card {
   text-align: center;
   margin-top: 30px;
@@ -239,4 +235,37 @@ code {
   font-family: 'Thasadith';
   background-color: #c5c3bc;
   margin-top: 10px;
+}
+
+#friend-card {
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+#legit-friend-card {
+  background-color: #e5e3de;
+  height: 150px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#friend-name {
+  color: #232220;
+  font-family: 'Cormorant Garamond';
+  font-size: 25px;
+}
+
+#friend-email {
+  color: #363533;
+  font-family: 'Cormorant Garamond';
+  font-size: 18px;
+}
+
+#unfollow-button {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  font-family: 'Thasadith';
+  background-color: #d6d3cd;
 }

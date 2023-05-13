@@ -14,20 +14,6 @@ const Explore = ({allPosts}) => {
   const redirect = (id) => {
     navigate(`/posts/${id}`)
   }
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //       try {      
-  //         const userResponse = await fetch(`/posts/${postId}/user`);
-  //         const userData = await userResponse.json();
-  //         setUser(userData);
-  //         console.log(userData.id);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     } 
-  //     fetchData();
-  //   }, [postId, toggle])
-
     return (
         <div id='following-photos'>
             <p id='following-photos-title'>
@@ -36,7 +22,7 @@ const Explore = ({allPosts}) => {
                 <Divider />
                 </p>
             <Box sx={{ overflowY: 'scroll' }}>
-            <ImageList variant="masonry" cols={6} gap={8}>
+            <ImageList variant="masonry" cols={4} gap={8}>
                 {allPosts.map((post) => (
                 <ImageListItem key={post.image}>
                     <img

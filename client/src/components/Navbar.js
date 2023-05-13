@@ -46,7 +46,7 @@ const NavBar = () => {
 
             <ThemeProvider theme={theme}>
                 <Stack direction="row" spacing={2}>
-                    <Link to={"/user/friends"}>
+                    <Link to={"/profile/following"}>
                         <Button id='nav-buttons' color="secondary" size='large'>Following</Button>
                     </Link>
                     <Link to={"/"}>
@@ -58,10 +58,9 @@ const NavBar = () => {
                     <Link to={"/profile"}>
                         <Button id='nav-buttons' color="secondary" size='large'>Profile</Button>
                     </Link>
-                    <div id='nav-buttons'>
-                    <LogOut />
-                    </div>
-
+                    <Button id='nav-buttons' color="secondary" size='large'>
+                        <LogOut />
+                    </Button>
                 </Stack>
             </ThemeProvider>
         </div>
