@@ -155,11 +155,6 @@ useEffect(() => {
         </CardContent>
       </Card>
       </ThemeProvider>
-
-          
-        </CardContent>
-      </Card>
-
       </div>
     )
     return (
