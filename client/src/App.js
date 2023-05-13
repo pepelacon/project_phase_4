@@ -53,7 +53,7 @@ function App() {
                     <Route path='/posts/:id' element={<PostCard userId={userId}/>} user={user}/>
                     <Route path='/posts/:id/edit' element={<EditPost setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path="/profile/following" element={<Following userId={userId}/>}/>
-                    <Route path="/profile/friends" element={<ListOfFriends />} user={user}/>
+                    <Route path="/profile/friends" element={<ListOfFriends userId={userId}/>} user={user}/>
                     <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} favorite={favorite} setAllPosts={setAllPosts} allPosts={allPosts} addToFavorite={addToFavorite}/>} user={user}/>
                     <Route path="/profile/settings" element={<Settings userId={userId}/>} />
                     <Route path="/profile/likes" element={<Likes />} user={user}/>

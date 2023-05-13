@@ -3,22 +3,74 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Link } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
+import { Link, useNavigate } from "react-router-dom"
 
-function ListOfFriends(){
+function ListOfFriends({userId}){
     
-
-// let postList = allPosts.map(item => (<FriendCard key={item.id} {...item} />)
     const [state, setState] = useState(true)
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [alignment, setAlignment] = useState('your posts');
+    const [allFriends, setAllFriends] = useState([])
+    const [allPosts, setAllPosts] = useState([])
+    const [toggle, setToggle] = useState(false)
 
     const handleList = (event, newAlignment) => {
         setAlignment(newAlignment);
         setState(!state)
     };
+    const navigate = useNavigate()
+    const redirect = (id) => {
+        navigate(`/posts/friends/${id}`)
+    }
+
+    const fetchFriends = async () => {
+        const response1 = await fetch(`/users/${userId}/friends`);
+        const data1 = await response1.json();
+        setAllFriends(data1);
+      };
+
+    const fetchPosts = async () => {
+        const response2 = await fetch(`/user/${userId}/friends/posts`);
+        const data2 = await response2.json();
+        setAllPosts(data2);
+    }
+
+    const fetchData = async (friend_id) => {
+        try {
+          const friendshipResponse = await fetch(`/users/${userId}/${friend_id}`);
+          const friendshipData = await friendshipResponse.json();
+      
+          await fetch(`/friendships/${friendshipData.friendship.id}`, {
+            method: "DELETE",
+          });
+      
+          const postsResponse = await fetch(`/friend/${friend_id}/posts`);
+          const data = await postsResponse.json();
+          console.log(data);
+          const updated = allPosts.filter((post) => {
+            return !data.some((d) => JSON.stringify(d) === JSON.stringify(post));
+          });
+          setAllPosts(updated);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
+    useEffect(() => {
+        fetchFriends();
+        fetchPosts()
+        fetchData()
+    }, [toggle]);
+
+
+
+    const unFollow = (friend_id) => {
+        const noFriend = allFriends.filter(friend => friend.id !== friend_id);
+        setAllFriends(noFriend);
+        fetchData(friend_id)
+    }
 
     const theme = createTheme({
         palette: {
@@ -62,9 +114,26 @@ function ListOfFriends(){
                 </Link>
             </ToggleButtonGroup>                
             </ThemeProvider>
-        <h1 >This is friends list</h1>
+        <div>
+            {allFriends.map((friend) => (
+                <div key={friend.id}>
+                    <p>Name: {friend.username}</p>
+                    <p>email: {friend.email}</p>
+                    <button onClick={() => unFollow(friend.id)}>Unfollow</button>
+                </div>
+            ))}
+        </div>
         </div>
      )   
 }
 
 export default ListOfFriends;
+  {/* <div>
+            {allFriends.map((friend) => (
+                <div key={friend.id}>
+                    <p>Name: {friend.username}</p>
+                    <p>email: {friend.email}</p>
+                    <button onClick={() => unFollow(friend.id)}>Unfollow</button>
+                </div>
+            ))}
+        </div> */}

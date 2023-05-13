@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,11 @@ import { amber } from '@mui/material/colors';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAuth0 } from '@auth0/auth0-react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
   palette: {
@@ -100,32 +105,39 @@ function Settings({userId}) {
             </ToggleButton>
           </Link>
         </ToggleButtonGroup>
-      </ThemeProvider>
-      <h2>Edit your profile</h2>
-      <form onSubmit={formik.handleSubmit} style={{ margin: '30px' }}>
-        <label htmlFor="email">Email Address</label>
-        <br />
-        <input
-          id="email"
-          name="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        <p style={{ color: "red" }}> {formik.errors.email}</p>
-        <label htmlFor="username">Username</label>
-        <br />
-
-        <input
-            id="username"
-            name="username"
-            onChange={formik.handleChange}
-            value={formik.values.username}
-        />
-        <p style={{ color: "red" }}> {formik.errors.username}</p>
-        <button type="submit">Submit</button>
-        </form>
-    </div>
-    );
+        <React.Fragment> 
+        <Card id='new-form-card' variant="outlined" sx={{ maxWidth: 500 }}>       
+        <p id='new-post'>Edit your profile!</p>
+        <CardContent>
+            <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
+            <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary" >
+              Email Address
+            </Typography>
+            <input
+              id="email"
+              name="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+            <Typography id='silly-forms' sx={{ fontSize: 20 }} color="text.secondary">
+                Username
+            </Typography>
+            <input
+              id="username"
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.username}
+            />
+            <CardActions>
+                <Button id='submit-button' type='input' size="large" color='secondary' center>Submit</Button>
+            </CardActions>
+            </form> 
+        </CardContent>
+      </Card>
+    </React.Fragment>
+    </ThemeProvider>
+  </div>
+  );
 };
 
 export default Settings;
