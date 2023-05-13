@@ -5,7 +5,7 @@ import Explore from './components/Explore'
 import PostForm from './components/PostForm'
 import './App.css';
 import PostCard from './components/PostCard';
-import ProFile from './components/ProFile';
+import UserProfile from './components/UserProfile';
 import Following from './components/Following';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -54,7 +54,7 @@ function App() {
                     <Route path='/posts/:id/edit' element={<EditPost setToggle={setToggle} toggle={toggle}/>}/>
                     <Route path="/profile/following" element={<Following userId={userId}/>}/>
                     <Route path="/profile/friends" element={<ListOfFriends userId={userId}/>} user={user}/>
-                    <Route path="/profile" element={<ProFile setUserId={setUserId} userId={userId} favorite={favorite} setAllPosts={setAllPosts} allPosts={allPosts} addToFavorite={addToFavorite}/>} user={user}/>
+                    <Route path="/profile" element={<UserProfile setUserId={setUserId} userId={userId} favorite={favorite} setAllPosts={setAllPosts} allPosts={allPosts} addToFavorite={addToFavorite}/>} user={user}/>
                     <Route path="/profile/settings" element={<Settings userId={userId}/>} />
                     <Route path="/profile/likes" element={<Likes />} user={user}/>
                 </Routes>
