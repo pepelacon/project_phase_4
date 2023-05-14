@@ -15,7 +15,7 @@ app = Flask(
     template_folder='../client/build'
     )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:9865458@localhost/DB'
 
 # "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
 # "postgresql://projectdb_la3v_user:jYGks0cLsUxfuZx0nhlTHB9ZOShNp9ug@dpg-chdr4le7avj0djk6c840-a.ohio-postgres.render.com/projectdb_la3v"
@@ -37,7 +37,7 @@ api = Api(app)
 
 class Posts(Resource):
     def get(self):
-        all_posts = [post.to_dict() for post in Post.query.all()]
+        all_posts = [post.to_dict() for post in Post.query.order_by(Post.created_at.desc()).all()]
         return make_response(all_posts, 200)
     
     def post(self):

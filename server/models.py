@@ -8,7 +8,7 @@ db = SQLAlchemy()
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-    serialize_rules = ('-created_at', '-updated_at', '-posts', '-friends', '-comments', '-likes')
+    serialize_rules = ('-updated_at', '-posts', '-friends', '-comments', '-likes')
     
     id = db.Column(db.Integer, primary_key=True)
 
