@@ -23,7 +23,7 @@ function ListOfFriends({userId}){
     const [allPosts, setAllPosts] = useState([])
     const [toggle, setToggle] = useState(false)
 
-    const handleList = (event, newAlignment) => {
+    const handleList = (event, newAlignment, allFriends) => {
         setAlignment(newAlignment);
         setState(!state)
     };
@@ -96,6 +96,7 @@ function ListOfFriends({userId}){
     return (
         <div id='profile-page'>       
             <p>Welcome, {user.name}</p>
+            {allFriends === undefined ? <p>relogin</p> : <h6>Following: {allFriends.length}</h6>}
             <ThemeProvider theme={theme}>
             <ToggleButtonGroup
                 color="primary"
@@ -110,14 +111,14 @@ function ListOfFriends({userId}){
                 <Link to="/profile/new">
                     <ToggleButton id='toggler' value="new post" color='third' >New Post</ToggleButton>
                 </Link>
-                <Link to="/profile/likes">
-                    <ToggleButton id='toggler' value="favorite" color='third' >Likes</ToggleButton>
+                <Link to="/profile/favorite">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Favorite</ToggleButton>
                 </Link>
                 <Link to="/profile/friends">
                     <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
                 </Link>
                 <Link to="/profile/settings">
-                    <ToggleButton id='toggler' value="settings" color='third' >Edit Profile</ToggleButton>
+                    <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
                 </Link>
             </ToggleButtonGroup>                
         <div id='friend-card'>

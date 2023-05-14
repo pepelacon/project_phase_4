@@ -21,8 +21,8 @@ const theme = createTheme({
   },
 });
 
-const UserProfile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite}) => {
-
+const UserProfile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToFavorite, allFriends}) => {
+    console.log(allFriends);
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [yourPosts, setYourPosts] = useState([{}])
     const [state, setState] = useState(true)
@@ -88,6 +88,8 @@ const UserProfile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToF
     return (
         <div id='profile-page'>       
             <p>Welcome, {user.name}</p>
+            {allFriends === undefined ? <p>relogin</p> : <h6>Following: {allFriends.length}</h6>}
+            
             {/* <p>Your user_id is: {userId}</p> */}
             <ThemeProvider theme={theme}>
             <ToggleButtonGroup
@@ -97,12 +99,14 @@ const UserProfile = ({setUserId, userId, favorite, setAllPosts, allPosts, addToF
                 onChange={handleList}
                 aria-label="Large"
             >
-                <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
-                <Link to="/profile/new">
-                    <ToggleButton id='toggler' value="favorite" color='third' >New Post</ToggleButton>
+                <Link to="/profile">
+                    <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
                 </Link>
-                <Link to="/profile/likes">
-                    <ToggleButton id='toggler' value="favorite" color='third' >Likes</ToggleButton>
+                <Link to="/profile/new">
+                    <ToggleButton id='toggler' value="new post" color='third' >New Post</ToggleButton>
+                </Link>
+                <Link to="/profile/favorite">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Favorite</ToggleButton>
                 </Link>
                 <Link to="/profile/friends">
                     <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>

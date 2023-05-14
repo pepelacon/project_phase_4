@@ -27,7 +27,7 @@ const theme = createTheme({
   },
 });
 
-function Settings({userId}) {
+function Settings({userId, allFriends}) {
   const [refreshPage, setRefreshPage] = useState(false);
   const [state, setState] = useState(true);
   const [alignment, setAlignment] = useState('your posts');
@@ -71,6 +71,7 @@ function Settings({userId}) {
   return (
     <div id="profile-page">
       <p>Welcome, {user.name}</p>
+      {allFriends === undefined ? <p>relogin</p> : <h6>Following: {allFriends.length}</h6>}
       <ThemeProvider theme={theme}>
         <ToggleButtonGroup
           color="primary"
@@ -80,30 +81,20 @@ function Settings({userId}) {
           aria-label="Large"
         >
           <Link to="/profile">
-            <ToggleButton id="toggler" value="your posts" color="third">
-              Your Posts
-            </ToggleButton>
-          </Link>
-          <Link to="/profile/new">
-            <ToggleButton id="toggler" value="new post" color="third">
-              New Post
-            </ToggleButton>
-          </Link>
-          <Link to="/profile/likes">
-            <ToggleButton id="toggler" value="favorite" color="third">
-              Likes
-            </ToggleButton>
-          </Link>
-          <Link to="/profile/friends">
-            <ToggleButton id="toggler" value="friends" color="third">
-              Friends
-            </ToggleButton>
-          </Link>
-          <Link to="/profile/settings">
-            <ToggleButton id="toggler" value="settings" color="third">
-              Edit Profile
-            </ToggleButton>
-          </Link>
+                    <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
+                </Link>
+                <Link to="/profile/new">
+                    <ToggleButton id='toggler' value="new post" color='third' >New Post</ToggleButton>
+                </Link>
+                <Link to="/profile/favorite">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Favorite</ToggleButton>
+                </Link>
+                <Link to="/profile/friends">
+                    <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
+                </Link>
+                <Link to="/profile/settings">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
+                </Link>
         </ToggleButtonGroup>
         <React.Fragment> 
         <Card id='new-form-card' variant="outlined" sx={{ maxWidth: 500 }}>       

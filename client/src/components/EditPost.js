@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { amber } from '@mui/material/colors';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Link } from "react-router-dom"
+import { useAuth0 } from '@auth0/auth0-react'
+
 
 function EditPost({setToggle, toggle}) {
   const [post, setPost] = useState(null);
@@ -12,6 +24,15 @@ function EditPost({setToggle, toggle}) {
     budget: yup.number().positive(),
   });
   const navigate = useNavigate();
+
+  const [state, setState] = useState(true)
+  const { user } = useAuth0();
+  const [alignment, setAlignment] = useState('your posts');
+
+  const handleList = (newAlignment) => {
+      setAlignment(newAlignment);
+      setState(!state)
+  };
 
 
   useEffect(() => {
@@ -65,16 +86,67 @@ function EditPost({setToggle, toggle}) {
     return <div>Loading post...</div>;
   }
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: amber[50],
+      },
+      secondary: {
+        main: '#5c6f59',
+      },
+      third: {
+        main: '#757269',
+      },
+    },
+  });
   return (
+    <div id='profile-page'>       
+    <p>Welcome, {user.name}</p>
+    <ThemeProvider theme={theme}>
+            <ToggleButtonGroup
+                color="primary"
+                exclusive
+                value={alignment}
+                onChange={handleList}
+                aria-label="Large"
+            >
+                <Link to="/profile">
+                    <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
+                </Link>
+                <Link to="/profile/new">
+                    <ToggleButton id='toggler' value="new post" color='third' >New Post</ToggleButton>
+                </Link>
+                <Link to="/profile/favorite">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Favorite</ToggleButton>
+                </Link>
+                <Link to="/profile/friends">
+                    <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
+                </Link>
+                <Link to="/profile/settings">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Edit Profile</ToggleButton>
+                </Link>
+            </ToggleButtonGroup>                
+    <React.Fragment> 
+    <Card id='new-form-card' variant="outlined" sx={{ maxWidth: 500 }}>       
+        <p id='new-post'>Edit post!</p>
+        <CardContent>
       <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
-        <label>Title </label>
+
+
+        <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary" >
+                Title
+        </Typography>
+
+
         <input
           type="text"
           name="title"
           value={formik.values.title}
           onChange={formik.handleChange}
         />
-        <label> Category</label>
+        <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary">
+                Category
+            </Typography>
         <select
           className="form-input"
           name="category"
@@ -83,15 +155,22 @@ function EditPost({setToggle, toggle}) {
           value={formik.values.category}
         >
           <option value="">Pick a Category</option>
-          <option value="Home Goods">Home Goods</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Fashion">Fashion</option>
-          <option value="Sports">Sports</option>
-          <option value="Books">Books</option>
-          <option value="Outdoors">Outdoors</option>
+            <option value="Books">Animals</option>
+            <option value="Books">Art</option>
+            <option value="Books">Beauty</option>
+            <option value="Books">Books</option>
+            <option value="DIY">DIY</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Food</option>
+            <option value="Home Goods">Home Goods</option>
+            <option value="Outdoors">Outdoors</option>
+            <option value="Sports">Sports</option>
+            <option value="Travel">Travel</option>
         </select>
 
-        <label>Image</label>
+        <Typography id='silly-forms' sx={{ fontSize: 20 }} color="text.secondary">
+                Image
+            </Typography>
         <input
           type="text"
           name="image"
@@ -99,7 +178,9 @@ function EditPost({setToggle, toggle}) {
           onChange={formik.handleChange}
         />
 
-        <label>Description</label>
+        <Typography id='silly-forms' sx={{ fontSize: 20 }} color="text.secondary">
+                Description
+            </Typography>
         <textarea
           type="text"
           rows="4"
@@ -109,8 +190,15 @@ function EditPost({setToggle, toggle}) {
           onChange={formik.handleChange}
         />
 
-        <input type="submit" />
+<CardActions>
+                <Button id='submit-button' type='input' size="large" color='secondary' center>Submit</Button>
+            </CardActions>
       </form>
+      </CardContent>
+      </Card>
+    </React.Fragment>
+    </ThemeProvider>
+    </div>
   );
 }
 

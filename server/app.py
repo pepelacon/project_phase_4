@@ -3,9 +3,10 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from dotenv import load_dotenv
+from flask import json
 load_dotenv()
 
-from models import db, User, Friendship, Post
+from models import db, User, Friendship, Post, Like
 
 
 app = Flask(
@@ -15,7 +16,7 @@ app = Flask(
     template_folder='../client/build'
     )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:9865458@localhost/DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz'
 
 # "postgresql://dbproject_vbgz_user:O5SqAoFGVLqmjagflvowWdtMaqzwAqIe@dpg-chdrl867avj22bgpac30-a.ohio-postgres.render.com/dbproject_vbgz"
 # "postgresql://projectdb_la3v_user:jYGks0cLsUxfuZx0nhlTHB9ZOShNp9ug@dpg-chdr4le7avj0djk6c840-a.ohio-postgres.render.com/projectdb_la3v"
@@ -38,6 +39,7 @@ api = Api(app)
 class Posts(Resource):
     def get(self):
         all_posts = [post.to_dict() for post in Post.query.order_by(Post.created_at.desc()).all()]
+
         return make_response(all_posts, 200)
     
     def post(self):
@@ -84,7 +86,7 @@ class PostById(Resource):
             return make_response({"message" : "Post not found"})
         db.session.delete(post)
         db.session.commit()
-        return make_response({"mesage" : "Post was deleted"})
+        return make_response({"mesage" : "POst was deleted"})
     
     def patch(self, id):
         upd_pt = Post.query.filter_by(id=id).first()
@@ -174,6 +176,7 @@ class Friendships(Resource):
         db.session.commit()
         return make_response({"mesage" : "POst was deleted"})
 
+
 class GetFriendships(Resource):
     def get(self, user_id, friend_id):
         friendship = Friendship.query.filter_by(friend_id=friend_id, user_id=user_id).first()
@@ -245,11 +248,67 @@ class FriendsPosts(Resource):
         all_posts = [post.to_dict() for post in friend.posts]
         return make_response(all_posts, 200)
     
+class LikesId(Resource):
+    def get(self, id):
+        post = Post.query.filter_by(id = id).first()
+        likes_list = [l.to_dict() for l in post.likes]
+        if likes_list is not None:
+            return make_response(likes_list, 200)
+        return make_response({"message" : ["no likes for this post"]}, 404)
+    
+class AddDeleteLikes(Resource):
+    def post(self, id):
+        data = request.get_json()
+        post_id = data['post_id']
+        user_id = data['user_id']
+        try:
+            new_like = Like(
+                user_id=user_id,
+                post_id=post_id
+            )
+        except Exception as ex:
+            return make_response({"errors": [ex.__str__()]}, 422)
+
+        db.session.add(new_like)
+        db.session.commit()
+
+        response_dict = new_like.to_dict()
+
+        response = make_response(
+            response_dict,
+            201,
+        )
+        return response
+    
+class LikesByUserPostId(Resource):
+    def get(self, userId, postId):
+        like_delete = Like.query.filter_by(user_id = userId, post_id = postId).first()
+        if not like_delete:
+            return app.response_class(json.dumps(False), content_type='application/json')
+        return app.response_class(json.dumps(True), content_type='application/json')
+    
+class DeleteLikesByUserPostId(Resource):    
+    def delete(self, userId, postId):
+        like_delete = Like.query.filter_by(user_id = userId, post_id = postId).first()
+        if not like_delete:
+            return make_response({"message": ["like for this post doesnot exist"]}, 404)
+        db.session.delete(like_delete)
+        db.session.commit()
+        return make_response({"message" : ["like deleted succsefully"]}, 204)
+
+#  *   delete likes by user and post id
+api.add_resource(LikesByUserPostId, '/post/<int:userId>/<int:postId>')
+api.add_resource(DeleteLikesByUserPostId, '/post/<int:userId>/likes/<int:postId>')
 
 
 #  *   all friends posts
 api.add_resource(FriendsPosts, '/friend/<int:id>/posts')
 
+#  *   likes for certain post
+api.add_resource(LikesId, '/post/<int:id>/likes')
+
+#  *   add  like for certain post
+api.add_resource(AddDeleteLikes, '/post/likes/<int:id>')
 
 api.add_resource(AllFriendships, '/users/<int:id>/friends')
 api.add_resource(GetFriendships, '/users/<int:user_id>/<int:friend_id>')
@@ -267,3 +326,4 @@ api.add_resource(Posts, '/posts')
 if __name__ == '__main__':
    
     app.run(port=5555, debug=True)
+

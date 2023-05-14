@@ -17,7 +17,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Link } from "react-router-dom"
 import { useAuth0 } from '@auth0/auth0-react'
 
-function PostForm({userId, setToggle, toggle}) {
+function PostForm({userId, setToggle, toggle, allFriends}) {
   const navigate = useNavigate();
   const formSchema = yup.object().shape({
     title: yup.string().required("Must enter a title"),
@@ -76,6 +76,7 @@ function PostForm({userId, setToggle, toggle}) {
   return (
     <div id='profile-page'>       
     <p>Welcome, {user.name}</p>
+    {allFriends === undefined ? <p>relogin</p> : <h6>Following: {allFriends.length}</h6>}
     <ThemeProvider theme={theme}>
             <ToggleButtonGroup
                 color="primary"
@@ -88,10 +89,10 @@ function PostForm({userId, setToggle, toggle}) {
                     <ToggleButton id='toggler' value="your posts" color='third' >Your Posts</ToggleButton>
                 </Link>
                 <Link to="/profile/new">
-                    <ToggleButton id='toggler' value="favorite" color='third' >New Post</ToggleButton>
+                    <ToggleButton id='toggler' value="new post" color='third' >New Post</ToggleButton>
                 </Link>
-                <Link to="/profile/likes">
-                    <ToggleButton id='toggler' value="favorite" color='third' >Likes</ToggleButton>
+                <Link to="/profile/favorite">
+                    <ToggleButton id='toggler' value="favorite" color='third' >Favorite</ToggleButton>
                 </Link>
                 <Link to="/profile/friends">
                     <ToggleButton id='toggler' value="friends" color='third' >Friends</ToggleButton>
@@ -105,9 +106,13 @@ function PostForm({userId, setToggle, toggle}) {
         <p id='new-post'>Create a new post!</p>
         <CardContent>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
+
+
             <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary" >
                 Title
             </Typography>
+
+
             <input type='text' name='title' value={formik.values.title} onChange={formik.handleChange} />
             <Typography id='silly-forms' sx={{ fontSize: 20 }} color="secondary">
                 Category

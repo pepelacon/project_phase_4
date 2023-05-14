@@ -31,89 +31,131 @@ const theme = createTheme({
   });
 
 
-function PostCard({userId}) {
-    const [bigCard, setBigCard] = useState({})
-    const [user, setUser] = useState({})
-    const [friends, setFriends] = useState([])
-    const [toggle, setToggle] = useState(false)
+function PostCard({userId, setToggle, toggle}) {
+    // const [bigCard, setBigCard] = useState({})
+    // const [user, setUser] = useState({})
+    // const [friends, setFriends] = useState([])
+    // const [toggle, setToggle] = useState(false)
 
-    let {id} = useParams()
+    const [bigCard, setBigCard] = useState({});
+    const [user, setUser] = useState({});
+    const [isFriend, setIsFriend] = useState(false);
+    
+    const [friendship, setFriendship] = useState(null);
+    const [isLike, setIsLike] = useState(false)
+    const [likes, setLikes]  = useState([]);
+
+    let { id: postId } = useParams()
     const {title, image, category, description} = bigCard
-    const {username} = user
+    
+    const { username, id } = user;
     const navigate = useNavigate()
     
-// get info abt CARD
-    useEffect(() => {
-        console.log(id);
-        fetch(`/posts/${id}`)
-        .then((resp) => resp.json())
-        .then((data) => setBigCard(data))
-    }, [id])
+ // get info about CARD and FRIENDS
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const postResponse = await fetch(`/posts/${postId}`);
+      const postData = await postResponse.json();
+      setBigCard(postData);
 
+      const userResponse = await fetch(`/posts/${postId}/user`);
+      const userData = await userResponse.json();
+      setUser(userData);
+     
+      const friendshipResponse = await fetch(`/users/${userId}/${userData.id}`);
+      const friendshipData = await friendshipResponse.json();
 
-// get info abt AUTHOR of post
-    useEffect(() => {
-        fetch(`/posts/${id}/user`)
-        .then((resp) => resp.json())
-        .then((data) => setUser(data))
-    }, [id])
-
-
-
-//set friends list
-useEffect(() => {
-    console.log(userId);
-    fetch(`/users/${userId}/friends`)
-      .then((resp) => resp.json())
-      .then((data) => handleFriendsData(data))
-  }, [toggle]);
-
-  function handleFriendsData(data) {
-    setFriends(data);
-    const existingFriend = data.some((friend) => parseInt(userId) === friend.friend_id);
-    console.log(existingFriend);
-}
-      
-      
-      
-      console.log(friends, `Post ID:  ${id}`, `Account logged IN: ${userId}`, `Author of post ID: ${user.id}`);
-    
-
-
-      const handleAddFriend = () => {
-        console.log("addFriend called")
-        fetch(`/friendships/${userId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            friend_id: user.id,
-            user_id: userId
-          }),
-        }).then((res) => {
-          if(res.ok) {
-            res.json().then(post => {
-              console.log(post);
-            //   setFriends([...friends, user]);
-              setToggle(!toggle);
-            })
-          }
-        })
+      if (friendshipData.friendshipExists) {
+        setFriendship(friendshipData.friendship);
+        setIsFriend(true);
+      } else {
+        setFriendship(null);
+        setIsFriend(false);
       }
-    
-      const handleRemoveFriend = () => {
-        console.log("removeFriend called")
-        fetch(`/friendships`, {
-          method: "DELETE"
-        }).then((res) => {
-          if(res.ok) {
-            setFriends(friends.filter((friend) => friend.fiend_id !== parseInt(userId)));
-            console.log(typeof userId)
-            setToggle(!toggle);
-          }
-        })
+
+      const likesResponse = await fetch(`/post/${postId}/likes`);
+      const likesData = await likesResponse.json();
+      setLikes(likesData)
+
+      const likesCheckResponse = await fetch(`/post/${userId}/${postId}`);
+      const likesCheckData = await likesCheckResponse.text();
+      setIsLike(Boolean(likesCheckData))
+      console.log(likesCheckData);
+      
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchData();
+}, [postId, toggle]);
+
+
+const handleAddFriend = () => {
+  if ( friendship === null ) {
+    fetch(`/friendships/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        friend_id: id,
+        user_id: userId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((newFriendship) => {
+        setFriendship(newFriendship);
+        setIsFriend(true);
+      });
+  } else {
+    fetch(`/friendships/${friendship.id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.ok) {
+        setFriendship(null);
+        setIsFriend(false);
+        setToggle(!toggle)
       }
+    });
+  }
+};
+
+console.log(isLike);
+
+const handleLikes = () => {
+    if (!isLike) {
+      fetch(`/post/likes/${postId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: postId,
+          user_id: userId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLikes((prev) => [...prev, data]);
+          setIsLike(true);
+        });
+    } else {
+      const likeId = likes.find((like) => like.user_id === userId)?.id;
+      fetch(`/post/${userId}/likes/${postId}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.text())
+        .then((data) => {
+          setIsLike(false);
+          setLikes((prev) => prev.filter((like) => like.id !== likeId));
+        });
+    }
+    // setToggle(!toggle);
+  };
+
         
     let singleCard = (
       <div id='single-card-screen'>
@@ -143,15 +185,17 @@ useEffect(() => {
           <Typography id="single-text-extras" gutterBottom variant="h5" component="div">
             Category: {category}
           </Typography>
-          
-            <Button id='single-card-button' size="medium" onClick={handleAddFriend}>Add friend</Button>
-
-            <Button id='single-card-heart' size="medium" color='third'>
-                <FavoriteBorderIcon />
+          {userId !== id && (
+            <Button id='single-card-button' size="medium" onClick={handleAddFriend}>{isFriend ? "Remove friend" : "Add friend"}</Button>  
+            )}
+            <Button id='single-card-heart' size="medium" color='third' onClick={handleLikes}>
+                
+                {!isLike? <FavoriteBorderIcon /> : <FavoriteIcon />}
             </Button>
-            <Button id='single-card-heart' size="medium" color='third'>
-                <FavoriteIcon />
-            </Button>
+            <Typography id="single-text-extras" gutterBottom variant="h5" component="div">
+            <h3>likes:   { likes.length }</h3>
+          </Typography>
+            
         </CardContent>
       </Card>
       </ThemeProvider>
